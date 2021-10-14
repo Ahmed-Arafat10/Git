@@ -1,0 +1,321 @@
+$ git config --global user.name "AA"
+
+$ git config --global user.email "AA@gmail.com"
+
+$ git config --global core.editor "vi"
+
+$ git config  user.name
+
+$$ git config  user.email
+
+$ git init
+
+$ git add file.txt
+
+$ git add file1.txt file2.txt file3.txt
+
+$ git add *.cpp
+
+$ git add .
+
+$ git status
+
+$ git status -s
+
+$ git status --help
+
+$ git status -h
+
+$ git commit -m "Message"
+
+- Add & Commit in one line
+$ git commit -a -m "Message"
+
+--------------------------------
+
+- Remove a file from staged area
+$ git rm --cached file.txt
+
+- Remove a whole folder from staged area
+$ git rm -r --cached Dir1
+
+- Ignore Files Or Directories
+$ touch .gitignore
+$ nano .gitignore
+Inside it
+{
+    *.class
+    bin/
+    file1.txt
+}
+-> then you can use $ git add . without adding these files
+
+- View previous log
+$ git log
+
+- View last 2 log
+$ git log -2
+
+-Not used widely
+$ git log --pretty=oneline
+
+-----------------------------------------------------------
+
+- Change comment of last commit
+$ git commit --amend
+-> and then terminal will open VI
+
+- To add latest stage area in previos commit {You are not creating a new commit}
+$ git commit --amend --no-edit
+
+- To unstage a file from satge area
+$ git restore --staged <FileName>
+OR 
+$ git restore --staged *
+
+- To restore a file from last commit {Will remove any changes in file}
+-> Note : this can take place when file is not in stage area,
+if file is changed (from last commit) but in stage area you cannot restore it
+you only can restore it when file is in unmodified area
+$ git restore <FileName>
+
+-Show files in staged area
+$ git ls-files
+
+
+-------------------------------------------------------------------
+
+- If you want to remove a file from last commit
+- first copy commit to staged area and then remove commit
+$ git reset --soft HEAD~1
+- Then remove file you doent want
+$ git reset HEAD <file>
+
+----------------------------------------------------------------------
+
+- To Override an existing remote
+$ git remote set-url origin <GithubLink>
+
+-----------------------------------------------------------------------
+~ Git Branching Video:
+----------------------
+
+- Create a new branch
+$ git branch <BranchName>
+
+- List all LOCAL Branches
+$ git branch
+
+- List all REMOTE Branches
+$ git branch -r
+-> -r: stands for remote
+
+- List all ALL Branches {LOCAL + REMOTE}
+$ git branch -a
+-> -a: stands for all {Linux}
+
+-> Note : branch command is not used amoung developers as this only create the
+   branch but not switch to it, they prefer to use checkout command that create then switch to created branch
+
+- Switch to a branch
+$ git checkout <BranchName>
+
+- Create a new branch then switch to it
+$ git checkout -b <BranchName>
+-> -b: stands for branch
+
+->New command in latest git version:{Not comman as its new}
+- Switch to a branch
+$ git switch <BranchName>
+
+- Create a new branch then switch to it
+$ git switch -c <BranchName>
+-> -c: stands for create
+
+-Go back to previous branch
+$ git switch -
+
+-> Task name should be descriptive {what changes will be in this branch}
+
+- Show commits of current branch
+$ git log
+
+- Show commits of ALL branch
+$ git log -all
+
+- Show commits of a specific branch
+$ git log <BranchName>
+
+- Remove a LOCAL branch
+$ git branch -d|D <BranchName>
+-> -d: stands for delete
+
+- Remove a REMOTE branch {In Github}
+$ git push <RemoteName> --delete <BranchName>
+EX: $ git push origin --delete Branch#2
+----------------------------------------------------
+
+
+V : Pull Requests & Merge Requests--------------------------------------
+
+Tree types of merging Requests:
+1)Merge commit
+2)Squash and Merge
+3)rebase and Merge
+
+
+V:  Updating local repository (fetch, merge, pull) & Team development demo ------------------
+
+
+Master branch -> branh on your PC {local}
+Region Master Branch -> branch in GitHub Repo
+
+
+-In case some commits are exit in Region Master Branch , while local is not aware of use fetch command
+VIP note: if ypu are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
+LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
+LOCAL Master branch -> REMOTE Master branch 
+
+$ git fetch
+-> if there is a messege, this means that some changes were downloaded from remote, if not you are up to date
+Note: it just tells you that some changes are exist in remote but not in your local pc, but it dont pull them {merge them to your local branch}
+
+
+Then what is the purpose of this command at all?
+Imagine that you are working on the new changes and I don't want to merge latest code into your branch.
+And you would like to know whether there are any changes in remote branch that are needed to be merged
+then use $ fetch command
+
+-If you want to download all changes from region master branch to your local master branch {VIP Note in Line #173 is also applied}
+$ git merge 
+
+- Git pull is combination of fetch + merge {both in one step} {VIP Note in Line #173 is also applied}
+$ git pull
+
+
+
+14. Merge Conflicts --------------------------------------------------------------------------------
+
+-> Image if you in remote master branch have a [Web/index.html] that contains
+===============================
+<html>
+<head>
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+
+now you have created a new branch [developer#1] from remote master for first developer
+in this brach devloper add a [style/index.css] file and edit [Web/index.html] to be:
+===============================
+<html>
+<head>
+<link rel="stylesheet" href="../style/index.css">
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+then push this branch into new remote branch called [developer#1]
+
+
+- now you have created a new branch [developer#2] from remote master for second developer
+in this brach devloper add a [style1/index123.cdd] file and edit [Web/index.html] to be:
+===============================
+<html>
+<head>
+<link rel="stylesheet" href="../style1/index123.css">
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+then push this branch into new remote branch called [developer#2]
+
+- Now if you pull then merged [developer#1] branch into master in github, this will be fine
+but if you then want to pull then merged [developer#2] branch into master{master + developer#1} in github
+there will be a conflict , why??
+because commit of [developer#1] branch is that it added a new [style/index.css] then edited line #3 in [Web/index.html]
+and after merging it into master branch, the last commit will be this commit
+- then as last commit of [developer#2] branch is that it added a new [style1/index123.css] then edited ALSO line #3 in [Web/index.html] {Same file Same Line}
+this means that there will be a conflict in  line #3 in [Web/index.html] as in both commits this line is edited
+so you cannot merge [developer#2] branch unless you fixed this conflict, this is done by first
+$ git pull origin master
+-> add new changes from remote master {these changes are commit of devloper#1 branch Line #240 here}
+- then edit this file 
+$ nano [Web/index.html]
+then add . and commit then pull to remote [devloper#2] branch, at this moment 
+there will be no conflicts in pull page in github, and you can now merge it into master branch only by {MERGE COMMIT Option} will know later why
+
+NOTE : This method for fixing conflicts is not best practice
+
+
+15. Git Rebasing & Force Update of remote repository  --------------------------------------------------------------------------------
+
+EMPTY
+
+16. Git Interactive Rebase --------------------------------------------
+
+EMPTY
+
+17. Git reset --------------------------------------------------------
+
+- When to use reset:
+    - Undo last changes
+    - Change commint history
+    - Restore state of the remote branch
+    - Restore state of the branch after unsuccessful rebase
+
+- to go back to a commit in which all changes are in staging area waiting to be commited {$ git commit -m}
+$ git reset --soft <CommitID>
+
+
+- to go back to a commit in which all changes are in untracked mode waiting to be in staging area {git add .}
+then to be commited {$ git commit -m}
+$ git reset --mixed <CommitID>
+OR
+$ git reset <CommitID>
+- Default option withour any flags is [--mixed]
+
+- to go back to a commit in which all changes reset your system files {Replace them}
+$ git reset --hard <CommitID>
+
+
+- to go back 3 previous commit 
+$ git reset --hard HEAD~3
+
+
+- Rest To remote branch :
+--------------------------
+
+- To fetch latest state of remote repository
+$ git fetch --all
+
+
+- To restore the state of remote master branch
+$ git reset --hard origin/master
+
+
+
+18. Git stash -----------------------------------------------------------------------------------
+
+EMPTY
+
+
+
+19. Git reflog-------------------------------------------------------------------------------------
+
+EMPTY
+
+20. Git cherry-pick-------------------------------------------------------------
+
+EMPTY
+
+
+21. Cloning remote repository: git clone ----------------------------------------------
+
+$ git clone <HERE PASTE THE STATE OF YOUR CLIPBOARD>
