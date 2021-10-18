@@ -377,27 +377,29 @@ its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
 ----------------------------------------------------------------------------
 
 
-Master branch -> branh on your PC {local}
-Region Master Branch -> branch in GitHub Repo
+- Master branch -> branch on your PC {local}
+- Region Master Branch -> branch in GitHub Repo
 
 
--In case some commits are exit in Region Master Branch , while local is not aware of use fetch command
-VIP note: if ypu are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
+- In case some commits are exist in Region Master Branch, while local is not aware of use $ git fetch command
+VIP note: if you are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
 LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
 LOCAL Master branch -> REMOTE Master branch
 
 $ git fetch
 -> if there is a messege, this means that some changes were downloaded from remote, if not you are up to date
-Note: it just tells you that some changes are exist in remote but not in your local pc, but it dont pull them {merge them to your local branch}
+Note: it just tells you that some changes are exist in remote but not in your local machine, but it dont pull them {merge them to your local branch}
 
 
-Then what is the purpose of this command at all?
-Imagine that you are working on the new changes and I don't want to merge latest code into your branch.
+- Then what is the purpose of this command at all?
+- Imagine that you are working on the new changes and you dont want to merge latest code into your branch.
 And you would like to know whether there are any changes in remote branch that are needed to be merged
-then use $ fetch command
+then use $ git fetch command
 
--If you want to download all changes from region master branch to your local master branch {VIP Note in Line #173 is also applied}
+
+- If you want to download all changes from region master branch to your local master branch {VIP Note in Line #173 is also applied}
 $ git merge
+
 
 - Git pull is combination of fetch + merge {both in one step} {VIP Note in Line #173 is also applied}
 $ git pull
