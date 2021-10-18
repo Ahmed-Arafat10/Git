@@ -1,0 +1,675 @@
+- To Configure git on Ubuntu install SSH and generate a key_pair, then copy public key and put it in SSH
+Option in Your Github Account , then go to your repo then just copy SSH link {Not HTTPS}
+
+
+2. Version Control Systems & Git - Overview :
+---------------------------------------------
+
+Git Workflow:
+
+
+Working             Staging         .git directory
+Directory            Area             {Local Repo}
+
+
+Three different states:
+1) Modified : You modified the filem but you have not committed your changes yet
+2) Staged : You have marked a modified file to be present in the next snapshot of your file system
+information about such changes are prenest in file with name index thats why we can say files are staged
+or file at index {Both are correct}
+3) Commited : Data is saftely stored in your local database {Snapshot}
+
+
+
+
+
+- Every snapshot of the files contains information about the author of the snapshot, this was done
+to easily identify who broke system or created defect file
+
+- Configuration levels:
+    - System : All local users in PC + All their repositories
+    - Global : All repositories on the computer for current user
+    - Local : Only current repository {After running $ git init to create .git folder}
+
+- Note : Values on the lower level overides valued of the upper level
+
+- Example:
+$ git config --global user.name
+
+- All of git command are written in git bash {Windows}
+
+- To Tell git who you are
+$ git config --global user.name "AA"
+$ git config --global user.email "AA@gmail.com"
+
+Note: Any commit will be save your email and your name to know who did what
+
+
+- To check value of user.name
+$ git config user.name
+
+
+- To check value of user.nemail
+$ git config user.email
+
+
+- List all properties with value
+$ git config -l
+OR
+$ git config --list
+
+- To change default text editor, make vi editor your default editor
+$ git config --global core.editor "vi"
+OR
+$ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
+
+
+
+
+6. Git repo init, First commit and main branch  :
+------------------------------------------------
+
+
+- Two ways to create a repository:
+        - Create repo locally
+        - Clone existing remote repo
+
+
+- Create a local repo {Creating a .git directory}
+$ git init
+
+
+- Add file.txt to stage area
+$ git add file.txt
+
+
+- Add some specific files to staging area
+$ git add file1.txt file2.txt file3.txt
+
+
+- Add all files that end with .cpp extension to stage area {Mask Method}
+$ git add *.cpp
+
+
+- Add all files/folders to stage area
+$ git add .
+
+
+- Check status of repo in your current branch
+$ git status
+
+
+- Check status of repo in your current branch with short version {flag -s}
+$ git status -s
+> A : stands for files are ADDED to staging area and need to be commited
+> ?? : untracked file {file that is created in working directory while its not in staging area}
+
+
+- If you forgot any command use --help flag
+$ git status --help
+OR
+$ git status -h
+
+
+- Commit new changes {Create a snapshot (version)}
+$ git commit -m "Message"
+> -m : message that describes changes that happened in that snapshot (version)
+
+
+- Note : Usually commit message of first commit is "init commit"
+
+
+- Add to stage area & Commit in one line
+$ git commit -a -m "Message"
+> -a : Tell the command to automatically stage files that have been modified and deleted, but new files
+you have not told Git about are not affected.
+
+
+
+
+
+
+7. Git ignoring & Git log :
+--------------------------
+
+- It does not make any sense to track all files in project as some of them are just
+logs files or binaries files that are generated during program compilation, so track only source code
+and configuration files
+
+
+- Remove a file from staging area
+$ git rm --cached file.txt
+> If you didnt use flag [--cached] it is going to remove file from file system too, Be Cureful
+
+
+- Remove a folder from staging area
+$ git rm -r --cached <DirName>
+> If you didnt use flag [--cached] it is going to remove folder from file system too, Be Cureful
+
+
+- Ignore Files Or Directories
+$ touch .gitignore
+$ nano .gitignore
+Inside it
+{
+    *.class     # All files that ends with extension .class
+    bin/        # Any file in bin folder
+    file1.txt   # Ignore Specific file
+}
+-> then you can use $ git add . and those files are not going to be added to staging area
+
+- After adding .gitignore file it will be shown as an untracked file {that is needed to be added to staging area}
+you also can igonre it by typing it in .gitignore file HAHAHAHA
+
+
+- View previous log of created commits in your current local branch
+$ git log
+
+
+- View last 2 log of created commits in your current local branch
+$ git log -2
+
+
+-Change formatting to show only Hash ID and Commit message {Not used widely}
+$ git log --pretty=oneline
+
+
+
+8. Git undoing things & Vi text editor :
+----------------------------------------
+
+- Change comment of last commit {You are NOT creating a new commit}
+$ git commit --amend
+> and then terminal will open VI to edit message of last commit
+> VIP Note: if your staging area is same as your last local commit then you used [--amend] option, this will just
+change message of last commit, but if your staging area is different from last commit {you have added a new file for example}
+then after using [--amend] option last commit will contains your new staging area {WIll be overridden}
+{amend takes your current staging area and override last commit content (if both are same nothing will be changed)
++ being able to change its message}
+> Checksum {Hash Code} of commit will change
+
+
+- To add latest sataging area in previous commit {You are NOT creating a new commit}
+$ git commit --amend --no-edit
+> [--amend --no-edit] option is same as [--amend] but without allowing you to change the last commit message
+> Checksum {Hash Code} of commit will change
+
+
+- To unstage a file from staging area
+$ git restore --staged <FileName>
+OR
+$ git restore --staged *
+> VIP Note : $ git rm --cached <FileName> command will remove file from staging area whether this file is modified or changed
+while $ git restore --staged <FileName> command For modified files its not going to remove them from staging area,
+its going to neglect changes in Modified file and remove new file from staging area
+
+
+- To restore a file from last commit {Will remove any changes in that file}
+$ git restore <FileName>
+> Note : this can take place when changed file is not in staging area {you didnt yest use $ git add},
+if file is changed (from last commit) but in staging area you cannot restore it,
+you only can restore it when changed file is in modified area
+
+- Note: we can restore anything that is commited, while changes that arent saved in commits can not be restored
+
+- Show files in staging area
+$ git ls-files
+
+
+
+
+
+9. Git remote repositories :
+----------------------------
+
+
+- Check if your local repo is connected to remote repo
+$ git remote -v
+> Will list all created remote repos
+
+
+- Add a new remote repo with shorthand name "origin"
+$ git remote add origin <GitHubLink>
+> origin will now be used instead of GitHub URL to make referencing much more easier
+
+
+- Push your commits & Connect local master branch with remote master branch
+$ git push origin -u <master>
+> -u : stands for upstream {This will link local repo ro remote one, then when you enter $ git pull it will understand that
+you want to pull changed from excatly that remote branch}
+
+
+- Clone remote repo to your machine
+$ git clone <GitHubLink>
+
+
+
+10. SSH Connection :
+--------------------
+
+
+SSH {Secure Socket Shell} : its a secured protocol that allows you to connect to remote computer using terminal
+using SSH you can log in to another computer from anywhere and perform any command on it
+- The goal of SSH is to make remote connections to computers much more secure
+- Establish a SSH connection to identify yourself without using username/password everytime
+- SSH keys comes in pairs :public and private
+- Public key can be stored in any remote server as GihHub
+- Private key is stored in your machine
+
+
+- To change remote URL of already created remote repo {EX: origin}
+$ git remote set-url origin <NewGitHubLink>
+
+
+- To remove a remote repo from your machine
+$ git remote rm <RemoteRepoName>
+
+
+
+
+
+
+11. Git Branching :
+-------------------
+
+
+- Create a new LOCAL branch
+$ git branch <BranchName>
+
+
+- List all LOCAL Branchs
+$ git branch
+
+
+- List all REMOTE Branchs
+$ git branch -r
+> -r: stands for remote
+
+
+- List ALL Branches {LOCAL + REMOTE}
+$ git branch -a
+-> -a: stands for all {Linux}
+
+
+- Note : $ git branch command is not used amoung developers as this only create the
+branch but not switch to it, they prefer to use $ git checkout command that creates the branch then switch to the created branch
+
+
+- Switch to a branch
+$ git checkout <BranchName>
+
+
+- Create a new Local branch then switch to it
+$ git checkout -b <BranchName>
+-> -b: stands for branch
+
+
+- New command in latest git version: {Not comman as it is new}
+- Switch to a branch
+$ git switch <BranchName>
+
+
+- Create a new branch then switch to it
+$ git switch -c <BranchName>
+-> -c: stands for create
+
+
+- Navigate back to previous branch
+$ git switch -
+
+
+-Note: Branch name should be descriptive {what changes will be in this branch}
+
+
+- Show commits of current branch
+$ git log
+> Note : your branch will have commits of master + commits of it, as git creates a pointer to last commit of master so it have
+the commits history of master branch
+
+
+- Show commits of ALL branch
+$ git log -all
+
+
+- Show commits of a specific branch
+$ git log <BranchName>
+> Can also work with remote repo example : $ git log origin/master
+
+
+- Remove a LOCAL branch
+$ git branch -d|D <BranchName>
+-> -d: stands for delete
+
+
+- Remove a REMOTE branch {In Github}
+$ git push <RemoteName> --delete <BranchName>
+EX: $ git push origin --delete Branch#2
+
+
+- VIP Note :
+- You can navigate to different commits using commit checksum {Hash ID}
+$ git checkout <checksum>
+- Now you are in detached HEAD state, you are not in a specific branch
+- You can use this feature to navigate to different versions of your codes
+- you can also create a commit in this state {Not Recommended} but once you have switched [$ git switch -]  from this state
+you wont be able to see this commit in commit tree history {Not saved in it}, but you can navigate to it again if you have saved
+its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
+
+
+
+
+
+
+12. Pull Requests & Merge Requests :
+------------------------------------
+
+
+
+- Three types of merging Requests:
+        1) Merge commit
+        2) Squash and Merge
+        3) rebase and Merge
+
+
+
+
+13. Updating local repository (fetch, merge, pull) & Team development demo :
+----------------------------------------------------------------------------
+
+
+Master branch -> branh on your PC {local}
+Region Master Branch -> branch in GitHub Repo
+
+
+-In case some commits are exit in Region Master Branch , while local is not aware of use fetch command
+VIP note: if ypu are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
+LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
+LOCAL Master branch -> REMOTE Master branch
+
+$ git fetch
+-> if there is a messege, this means that some changes were downloaded from remote, if not you are up to date
+Note: it just tells you that some changes are exist in remote but not in your local pc, but it dont pull them {merge them to your local branch}
+
+
+Then what is the purpose of this command at all?
+Imagine that you are working on the new changes and I don't want to merge latest code into your branch.
+And you would like to know whether there are any changes in remote branch that are needed to be merged
+then use $ fetch command
+
+-If you want to download all changes from region master branch to your local master branch {VIP Note in Line #173 is also applied}
+$ git merge
+
+- Git pull is combination of fetch + merge {both in one step} {VIP Note in Line #173 is also applied}
+$ git pull
+
+
+
+14. Merge Conflicts --------------------------------------------------------------------------------
+
+-> Image if you in remote master branch have a [Web/index.html] that contains
+===============================
+<html>
+<head>
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+
+now you have created a new branch [developer#1] from remote master for first developer
+in this brach devloper add a [style/index.css] file and edit [Web/index.html] to be:
+===============================
+<html>
+<head>
+<link rel="stylesheet" href="../style/index.css">
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+then push this branch into new remote branch called [developer#1]
+
+
+- now you have created a new branch [developer#2] from remote master for second developer
+in this brach devloper add a [style1/index123.cdd] file and edit [Web/index.html] to be:
+===============================
+<html>
+<head>
+<link rel="stylesheet" href="../style1/index123.css">
+</head>
+<body>
+<h1>Hello World</h1>
+</body>
+</html>
+=================================
+then push this branch into new remote branch called [developer#2]
+
+- Now if you pull then merged [developer#1] branch into master in github, this will be fine
+but if you then want to pull then merged [developer#2] branch into master{master + developer#1} in github
+there will be a conflict , why??
+because commit of [developer#1] branch is that it added a new [style/index.css] then edited line #3 in [Web/index.html]
+and after merging it into master branch, the last commit will be this commit
+- then as last commit of [developer#2] branch is that it added a new [style1/index123.css] then edited ALSO line #3 in [Web/index.html] {Same file Same Line}
+this means that there will be a conflict in  line #3 in [Web/index.html] as in both commits this line is edited
+so you cannot merge [developer#2] branch unless you fixed this conflict, this is done by first
+$ git pull origin master
+-> add new changes from remote master {these changes are commit of devloper#1 branch Line #240 here}
+- then edit this file
+$ nano [Web/index.html]
+then add . and commit then pull to remote [devloper#2] branch, at this moment
+there will be no conflicts in pull page in github, and you can now merge it into master branch only by {MERGE COMMIT Option} will know later why
+
+NOTE : This method for fixing conflicts is not best practice
+
+
+15. Git Rebasing & Force Update of remote repository  --------------------------------------------------------------------------------
+
+EMPTY
+
+16. Git Interactive Rebase --------------------------------------------
+
+EMPTY
+
+17. Git reset --------------------------------------------------------
+
+- When to use reset:
+    - Undo last changes
+    - Change commint history
+    - Restore state of the remote branch
+    - Restore state of the branch after unsuccessful rebase
+
+- to go back to a commit in which all changes are in staging area waiting to be commited {$ git commit -m}
+$ git reset --soft <CommitID>
+
+
+- to go back to a commit in which all changes are in untracked mode waiting to be in staging area {git add .}
+then to be commited {$ git commit -m}
+$ git reset --mixed <CommitID>
+OR
+$ git reset <CommitID>
+- Default option withour any flags is [--mixed]
+
+- to go back to a commit in which all changes reset your system files {Replace them}
+$ git reset --hard <CommitID>
+
+
+- to go back 3 previous commit
+$ git reset --hard HEAD~3
+
+
+- Rest To remote branch :
+--------------------------
+
+- To fetch latest state of remote repository
+$ git fetch --all
+
+
+- To restore the state of remote master branch
+$ git reset --hard origin/master
+
+
+
+18. Git stash -----------------------------------------------------------------------------------
+
+EMPTY
+
+
+
+19. Git reflog-------------------------------------------------------------------------------------
+
+EMPTY
+
+20. Git cherry-pick-------------------------------------------------------------
+
+EMPTY
+
+
+21. Cloning remote repository: git clone ----------------------------------------------
+
+$ git clone <HERE PASTE THE STATE OF YOUR CLIPBOARD>
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+- If you want to remove a file from last commit
+- first copy commit to staged area and then remove commit
+$ git reset --soft HEAD~1
+- Then remove file you doent want
+$ git reset HEAD <file>
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Combining Git commits with squash :
+----------------------------------
+
+- We’ll say my starting point is my bug fix branch with 3 commits.
+
+It would be nice if I didn’t have to preserve these extraneous commits as separate entities since they are all related to a bug fix.
+- I’d rather combine them together into one clean commit.
+
+- With my bug fix branch checked out, I’ll start by running the interactive rebase command with HEAD~3. This lets
+Git know I want to operate on the last three commits back from HEAD.
+$ git rebase -i HEAD~3
+
+- Git will open up your default terminal text editor (most likely vim) and present you with a list of commits:
+
+-----------------------
+pick 7f9d4bf Accessibility fix for frontpage bug
+pick 3f8e810 Updated screenreader attributes
+pick ec48d74 Added comments & updated README
+
+# Rebase 4095f73..ec48d74 onto 4095f73 (3 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+--------------------------
+
+- There are a couple options here, but we’ll go ahead and mark commits we’d like to meld with it’s successor by
+changing pick to squash. (If you’re using VIM, type i to enter insert mode)
+--------------------------
+pick 7f9d4bf Accessibility fix for frontpage bug
+squash 3f8e810 Updated screenreader attributes
+squash ec48d74 Added comments & updated README
+Press ESC then type :wq to save and exit the file (if you are using VIM)
+--------------------------
+
+- At this point Git will pop up another dialog where you can rename the commit message of the new, larger squashed commit:
+
+--------------------------
+# This is a combination of 3 commits
+# This is the 1st commit message:
+
+Accessibility fix for frontpage bug
+
+# This is the commit message for #1:
+
+Updated screenreader attributes
+
+# This is the commit message for #2:
+
+Added comments & updated README
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit
+--------------------------
+
+- Simply saving this file without making changes will result in a single commit with a commit message that is a
+concatination of all 3 messages. If you’d rather rename your new commit entirely, comment out each commit’s message,
+and write you’re own. Once you’ve done, save and exit:
+
+- That’s it. You can either merge or rebase your branch back to mainline.
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Rebase:
+-------
+
+
+- When I start development I always make sure the code on my local machine is synced to the latest commit from remote master
+# With my local master branch checked out
+$ git pull
+
+
+- Next, I’ll check out {Create} a new branch so I can write and commit code to this branch – keeping my work separated from the
+master branch
+$ git checkout -b my_cool_feature
+
+- As I’m developing my feature, I’ll make a few commits…
+$ git add .
+$ git commit -m 'This is a new commit, yay!'
+
+
+- Do this stip three time {For Example} to have three commits in that branch
+
+- Note: while I’m developing it’s likely that my fellow developers will have shipped some of their own changes to
+remote master. That’s ok, we can deal with that later.
+
+- Now that I’m done developing my feature, I want to merge my changes back into remote master. To begin this process
+I’ll switch back to local master branch and pull the latest changes. This ensures my local machine has any new
+commits submitted by my teammates.
+$ git checkout master
+$ git pull
+
+- What I want to do now is make sure my feature will jive with any new changes from remote master. To do this,
+I’ll checkout {Switch To} my feature branch and rebase against my local master. This will re-anchor my branch against the latest
+changes I just pulled from remote master. Additionally at this point, Git will let me know if I have any conflicts
+and I can take care of them on my branch
+$ git checkout my_cool_feature
+$ git rebase master
+
+- Now that my feature branch doesn’t have any conflicts, I can switch back to my master branch and place my changes onto master.
+$ git checkout master
+$ git rebase my_cool_feature
+
+- Since I synced with remote master before doing the rebase, I should be able to push my changes up to remote master
+without issues.
+
+$ git push origin -u master
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
