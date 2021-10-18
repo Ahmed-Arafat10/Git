@@ -21,8 +21,6 @@ or file at index {Both are correct}
 
 
 
-
-
 - Every snapshot of the files contains information about the author of the snapshot, this was done
 to easily identify who broke system or created defect file
 
@@ -62,7 +60,6 @@ $ git config --list
 $ git config --global core.editor "vi"
 OR
 $ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
-
 
 
 
@@ -127,8 +124,6 @@ you have not told Git about are not affected.
 
 
 
-
-
 7. Git ignoring & Git log :
 --------------------------
 
@@ -175,6 +170,7 @@ $ git log --pretty=oneline
 
 
 
+
 8. Git undoing things & Vi text editor :
 ----------------------------------------
 
@@ -218,7 +214,6 @@ $ git ls-files
 
 
 
-
 9. Git remote repositories :
 ----------------------------
 
@@ -244,6 +239,7 @@ $ git clone <GitHubLink>
 
 
 
+
 10. SSH Connection :
 --------------------
 
@@ -263,8 +259,6 @@ $ git remote set-url origin <NewGitHubLink>
 
 - To remove a remote repo from your machine
 $ git remote rm <RemoteRepoName>
-
-
 
 
 
@@ -358,11 +352,8 @@ its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
 
 
 
-
-
 12. Pull Requests & Merge Requests :
 ------------------------------------
-
 
 
 - Three types of merging Requests:
