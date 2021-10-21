@@ -1,5 +1,5 @@
 - To Configure git on Ubuntu install SSH and generate a key_pair, then copy public key and put it in SSH
-Option in Your Github Account , then go to your repo then just copy SSH link {Not HTTPS}
+Option in Your Github Account, then go to your repo then just copy SSH link {Not HTTPS}
 
 
 2. Version Control Systems & Git - Overview :
@@ -13,15 +13,15 @@ Directory            Area             {Local Repo}
 
 
 Three different states:
-1) Modified : You modified the filem but you have not committed your changes yet
-2) Staged : You have marked a modified file to be present in the next snapshot of your file system
+1) Modified : You modified the file but you have not committed your changes yet
+2) Staged : You have marked a modified file to be present in the next snapshot of your file system,
 information about such changes are prenest in file with name index thats why we can say files are staged
 or file at index {Both are correct}
 3) Commited : Data is saftely stored in your local database {Snapshot}
 
 
 
-- Every snapshot of the files contains information about the author of the snapshot, this was done
+- Every snapshot of the files contains information about the author of the snapshot, this is done
 to easily identify who broke system or created defect file
 
 - Configuration levels:
@@ -29,18 +29,20 @@ to easily identify who broke system or created defect file
     - Global : All repositories on the computer for current user
     - Local : Only current repository {After running $ git init to create .git folder}
 
-- Note : Values on the lower level overides valued of the upper level
+- Note : Values on the lower level overrides valued of the upper level
 
 - Example:
 $ git config --global user.name
 
+
 - All of git command are written in git bash {Windows}
+
 
 - To Tell git who you are
 $ git config --global user.name "AA"
 $ git config --global user.email "AA@gmail.com"
 
-Note: Any commit will be save your email and your name to know who did what
+- Note: Any commit will be save your email and your name to know who did what
 
 
 - To check value of user.name
@@ -51,15 +53,17 @@ $ git config user.name
 $ git config user.email
 
 
-- List all properties with value
+- List all properties with values
 $ git config -l
 OR
 $ git config --list
+
 
 - To change default text editor, make vi editor your default editor
 $ git config --global core.editor "vi"
 OR
 $ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
+
 
 
 
@@ -120,6 +124,8 @@ $ git commit -m "Message"
 $ git commit -a -m "Message"
 > -a : Tell the command to automatically stage files that have been modified and deleted, but new files
 you have not told Git about are not affected.
+- VIP Note : This works only if you have modified an existing file NOT creating a new one
+
 
 
 
@@ -170,16 +176,15 @@ $ git log --pretty=oneline
 
 
 
-
 8. Git undoing things & Vi text editor :
 ----------------------------------------
 
 - Change comment of last commit {You are NOT creating a new commit}
 $ git commit --amend
 > and then terminal will open VI to edit message of last commit
-> VIP Note: if your staging area is same as your last local commit then you used [--amend] option, this will just
+- VIP Note: if your staging area is same as your last local commit then you used [--amend] option, this will just
 change message of last commit, but if your staging area is different from last commit {you have added a new file for example}
-then after using [--amend] option last commit will contains your new staging area {WIll be overridden}
+then after using [--amend] option last commit will contains your new staging area {Will be overridden}
 {amend takes your current staging area and override last commit content (if both are same nothing will be changed)
 + being able to change its message}
 > Checksum {Hash Code} of commit will change
@@ -195,14 +200,15 @@ $ git commit --amend --no-edit
 $ git restore --staged <FileName>
 OR
 $ git restore --staged *
-> VIP Note : $ git rm --cached <FileName> command will remove file from staging area whether this file is modified or changed
-while $ git restore --staged <FileName> command For modified files its not going to remove them from staging area,
-its going to neglect changes in Modified file and remove new file from staging area
+> VIP Note : $ git rm --cached <FileName> command will remove file from staging area whether this file is modified or just added
+while $ git restore --staged <FileName> command For modified file its not going to remove it from staging area,
+its going to neglect changes of it {this is done if you added new modified file to staging area accedintly but you want
+while you dont want to commit that change so you undo it} OR it removes new ADDED file from staging area
 
 
 - To restore a file from last commit {Will remove any changes in that file}
 $ git restore <FileName>
-> Note : this can take place when changed file is not in staging area {you didnt yest use $ git add},
+> Note : this can take place when changed file is not in staging area {you didnt yet use $ git add},
 if file is changed (from last commit) but in staging area you cannot restore it,
 you only can restore it when changed file is in modified area
 
@@ -230,7 +236,7 @@ $ git remote add origin <GitHubLink>
 
 - Push your commits & Connect local master branch with remote master branch
 $ git push origin -u <master>
-> -u : stands for upstream {This will link local repo ro remote one, then when you enter $ git pull it will understand that
+> -u : stands for upstream {This will link local repo to remote one, then when you enter $ git pull it will understand that
 you want to pull changed from excatly that remote branch}
 
 
@@ -259,7 +265,6 @@ $ git remote set-url origin <NewGitHubLink>
 
 - To remove a remote repo from your machine
 $ git remote rm <RemoteRepoName>
-
 
 
 
@@ -351,7 +356,6 @@ its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
 
 
 
-
 12. Pull Requests & Merge Requests :
 ------------------------------------
 
@@ -377,10 +381,12 @@ VIP note: if you are on Devloper#1 branch LOCALLY then using fetch will search f
 LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
 LOCAL Master branch -> REMOTE Master branch
 
-$ git fetch
--> if there is a messege, this means that some changes were downloaded from remote, if not you are up to date
-Note: it just tells you that some changes are exist in remote but not in your local machine, but it dont pull them {merge them to your local branch}
 
+$ git fetch
+> if there is a messege, this means that some changes were downloaded from remote, if not you are up to date
+- Note : it just tells you that some changes are exist in remote but not in your local machine, but it dont pull them {merge them to your local branch}
+- VIP Note : $ git fetch command will work only one time and after fetching data from remote repo into local one, if you use this
+command again it wont work {As you already fetched new changes}
 
 - Then what is the purpose of this command at all?
 - Imagine that you are working on the new changes and you dont want to merge latest code into your branch.
@@ -444,7 +450,7 @@ but if you then want to pull then merged [developer#2] branch into master{master
 there will be a conflict , why??
 because commit of [developer#1] branch is that it added a new [style/index.css] then edited line #3 in [Web/index.html]
 and after merging it into master branch, the last commit will be this commit
-- then as last commit of [developer#2] branch is that it added a new [style1/index123.css] then edited ALSO line #3 in [Web/index.html] {Same file Same Line}
+- Then as last commit of [developer#2] branch is that it added a new [style1/index123.css] then edited ALSO line #3 in [Web/index.html] {Same file Same Line}
 this means that there will be a conflict in  line #3 in [Web/index.html] as in both commits this line is edited
 so you cannot merge [developer#2] branch unless you fixed this conflict, this is done by first
 $ git pull origin master
@@ -457,57 +463,218 @@ there will be no conflicts in pull page in github, and you can now merge it into
 NOTE : This method for fixing conflicts is not best practice
 
 
-15. Git Rebasing & Force Update of remote repository  --------------------------------------------------------------------------------
 
-EMPTY
 
-16. Git Interactive Rebase --------------------------------------------
+15. Git Rebasing & Force Update of remote repository :
+------------------------------------------------------
 
-EMPTY
 
-17. Git reset --------------------------------------------------------
+$ git rebase            -> To rebase changes from another Branch
+VS
+$ git pull --rebase     -> fetch + rebase command, this means that it first fetch from remote repo and then rebase
 
-- When to use reset:
+-----------------------------
+  0--
+ /   \
+0-----0
+ \
+  0---0
+-----------------------------
+- After solving a conflict {Editing files} use this command to continue rebase process
+$ git rebase --continue
+
+
+- To Stop rebase process
+$ git rebase --abort
+
+
+- To skip conflict {Not recommended at all}
+$ git rebase --skip
+
+
+
+
+- Now after reslovinf the conflict add modified files in staging area {$ git add .} then continue rebase process {$ git rebase --continue}
+
+-----------------------------
+  0--               Feature#1
+ /   \
+0-----0
+        \
+         0---0      Feature#2
+-----------------------------
+
+- Now if you $ git push into Feature#2 it will gives you an error, thats because remote Feature#2 branch has a differnet
+commit history compared to local one, beacuse rebsae comman changes git history . NOw both local and remote remote Feature#2 branch
+commit history
+
+- I need to tell git which version is correct
+$ git push -f
+> BE CAREFUL as it will overrides remote branch commit history with your local one
+> Use it with only branchs not with MASTER branch
+-----------------------------
+Remote A---B---C---D
+Local  A--E
+$ git push -f
+Now remote branch will be: Remote A--E
+{ALL of remote tree will be same as local tree}
+-----------------------------
+
+
+Fou rules of happiness:
+1) Always create branched from master, not from the other development branches.
+2) Force update and change commit history only on your branch you are sure no body use it
+3) use --forece-with-lease instead of -f
+4) Always rebase on the origin master branch before creating a pull request
+
+- It is a safer option that will not override any work on the remote branch if more commits were added to the remote
+branch by another team member.
+$ git push --force-with-lease
+
+> best practice : rebase on the region master as often as you can to fix conflicts gradually and to test your
+implementation on the latest version of the code during     the development to not spend a lot of time.
+
+
+
+
+
+16. Git Interactive Rebase :
+----------------------------
+
+
+- If you want to vhange message of last Commited
+$ git commit --amend
+
+- But what if you want to change second last one
+
+- Interactive Rebase : It makes it easy to clean up your commits before they get rebased or moved into another branch
+
+$ git rebase -i HEAD~3
+> i: stands for interactive rebase
+
+- Then subititite for [r -> reward] insted of [pick] in commit you want to change its message
+then save and close editor
+
+
+
+- You can combine {squash} many commits into just one commit to ensure git clean history{If they are all related to same feature}
+$ git rebase -i HEAD~3
+
+- Then subititite for [s -> squash] insted of [pick] for all commits except first one then save and close editor
+
+- Note: merge conflict may happens during squashing so you will fix it manully
+- it then will merge those commits in just one new commit that will have a different checksum {Hash ID}
++ changing git commit history, so to pull these changes into your remote feature branch use:
+$ git push --force-with-lease origin <BranchName>
+
+
+
+
+17. Git reset :
+--------------
+
+
+- When to use $ git reset:
     - Undo last changes
     - Change commint history
     - Restore state of the remote branch
     - Restore state of the branch after unsuccessful rebase
 
-- to go back to a commit in which all changes are in staging area waiting to be commited {$ git commit -m}
+- Go back to a commit in which all changes are in staging area waiting to be commited {$ git commit -m}
 $ git reset --soft <CommitID>
 
 
-- to go back to a commit in which all changes are in untracked mode waiting to be in staging area {git add .}
+- Go back to a commit in which all changes are in untracked mode waiting to be in staging area {git add .}
 then to be commited {$ git commit -m}
 $ git reset --mixed <CommitID>
 OR
 $ git reset <CommitID>
-- Default option withour any flags is [--mixed]
+- Default option without any flags is [--mixed]
 
-- to go back to a commit in which all changes reset your system files {Replace them}
+
+- Go back to a commit in which all changes will reset your files in working directory {Replace them}
 $ git reset --hard <CommitID>
 
 
-- to go back 3 previous commit
+- Go back 3 previous commit
 $ git reset --hard HEAD~3
+OR
+$ git reset --hard <CheckSumID>
 
 
-- Rest To remote branch :
---------------------------
 
-- To fetch latest state of remote repository
-$ git fetch --all
+- If you want to rest working tree as it is in a remote repo :
+        - To fetch latest state of remote repository
+        $ git fetch --all
 
-
-- To restore the state of remote master branch
-$ git reset --hard origin/master
+        - To restore the state of remote master branch
+        $ git reset --hard origin/master
 
 
 
 18. Git stash -----------------------------------------------------------------------------------
 
-EMPTY
+- When to use stash:
+    - Temporarily put work aside
+    - Apply the same changes on multiple brmaches
+    - Create new Branch based on the current changes later
 
+- Now if you have modified some files and used $ git status , those files will be presented in section of waiting to be Staged
+- Add modified OR new files to stash {Not present in staging area}
+$ git stash
+> Now changes are in stash
+
+
+- Now if you used $ git status, working tree will be clean {Notthing to commit}
+
+- If you need changes that are saved in TOP of stash {Import them}
+$ git stash apply
+
+
+
+- Stash works like a stack and applys LIFO
+
+- list all changes in stash stack
+$ git stash list
+> Last stash has index {0} its on top of stack
+
+- Import {Apply} changes from a stack with index N
+$ git stash apply stash@{N}
+
+
+- Add modified OR new files to stash {Not present in staging area} with a MEESAGE {Best Practice}
+$ git stash save "Message"
+
+
+- If you need changes that are saved in TOP of stash {Import them} then REOMVE IT
+$ git stash pop
+
+
+- VIP Note : You can only stash files that are in staging area OR files that are tracked by git
+
+
+- stash can save untracked files {files that are created but not in staging area}
+- To add them in stash
+$ git stash -u
+> -u : stands for untracked files
+
+
+- Add file that are untracked  + ignored by .gitignore {Rare To Use}
+$ git stash -a
+> -a : stands for ALL
+
+
+- Create a branch from stash
+$ git stash branch <BranchNameYouWantToCreate> <StashID>
+> Without specifing stach ID first stash from stack will be used
+
+
+- Remove a stash form stack {without appling it}
+$ git stash drop stash@{N}
+
+
+- Clear ALL stash form stack {without appling it}
+$ git stash clear
 
 
 19. Git reflog-------------------------------------------------------------------------------------
@@ -519,9 +686,10 @@ EMPTY
 EMPTY
 
 
-21. Cloning remote repository: git clone ----------------------------------------------
+21. Cloning remote repository: git clone :
+------------------------------------------
 
-$ git clone <HERE PASTE THE STATE OF YOUR CLIPBOARD>
+$ git clone <GitHubURL>
 
 
 
@@ -632,12 +800,23 @@ $ git pull
 master branch
 $ git checkout -b my_cool_feature
 
+----------------------------------------
+         /      Feature_Branch
+A---B---C       Master
+----------------------------------------
+
 - As I’m developing my feature, I’ll make a few commits…
 $ git add .
 $ git commit -m 'This is a new commit, yay!'
 
 
 - Do this stip three time {For Example} to have three commits in that branch
+
+----------------------------------------
+              X --- Y --- Z Feature_Branch
+             /
+A --- B --- C               Master
+----------------------------------------
 
 - Note: while I’m developing it’s likely that my fellow developers will have shipped some of their own changes to
 remote master. That’s ok, we can deal with that later.
@@ -648,14 +827,30 @@ commits submitted by my teammates.
 $ git checkout master
 $ git pull
 
-- What I want to do now is make sure my feature will jive with any new changes from remote master. To do this,
+------------------------------------------------------------
+              X --- Y --- Z     Feature_Branch
+             /
+A --- B --- C --- D -- E        Master
+------------------------------------------------------------
+
+- What I want to do now is make sure my feature will jive with any new changes from remote master OR i just want the
+changes from master as i will continue orikind based on them so i want to ahve them in my feature branch. To do this,
 I’ll checkout {Switch To} my feature branch and rebase against my local master. This will re-anchor my branch against the latest
 changes I just pulled from remote master. Additionally at this point, Git will let me know if I have any conflicts
 and I can take care of them on my branch
 $ git checkout my_cool_feature
 $ git rebase master
+> Note : when you use $ git rebase you are rebasing from LOCAL master repo, so make sure first that in local  master Branch
+you have pulled new changes from remote master branch
 
-- Now that my feature branch doesn’t have any conflicts, I can switch back to my master branch and place my changes onto master.
+------------------------------------------------------------
+                         X^--- Y^ --- Z^    Feature_Branch
+                        /
+A --- B --- C --- D -- E                    Master
+------------------------------------------------------------
+
+- Now that my feature branch doesn’t have any conflicts, I can switch back to my master branch and place my changes onto master,
+this will put all of Feature_Branch commits on top of master branch {It now will includes all of changes in Feature_Branch}
 $ git checkout master
 $ git rebase my_cool_feature
 
@@ -663,6 +858,19 @@ $ git rebase my_cool_feature
 without issues.
 
 $ git push origin -u master
+
+
+- VIP Note: Dont use $ git rebase command in a shared Feature Branch {Just in a branch you are the only one working on}
+- Beacause time arrangement of commits will not be accured For Example :
+
+------------------------------------------------------------------------------------------------------------------------
+  3                       3               3--4                                   3--4
+ /                       /               /                                      /
+1--2   Rebase-->     1--2            1--2--5       Rebase-->             1--2--5
+------------------------------------------------------------------------------------------------------------------------
+
+- In that case its not timely accurate
+
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
