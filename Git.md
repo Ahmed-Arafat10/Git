@@ -7,66 +7,74 @@ Option in Your GitHub Account, then go to your repo then just copy SSH link {Not
 2. Version Control Systems & Git - Overview :
 ---------------------------------------------
 
-Git Workflow:
-
-
+- Git Workflow:
+```
 Working             Staging         .git directory
 Directory            Area             {Local Repo}
+```
 
-
-Three different states:
-1) Modified : You modified the file but you have not committed your changes yet
-2) Staged : You have marked a modified file to be present in the next snapshot of your file system,
-information about such changes are present in file with name index thats why we can say files are staged
-or file at index {Both are correct}
-3) Committed : Data is safely stored in your local database {Snapshot}
-
+- Three different states:
+    1) ```Modified``` : You modified the file but you have not committed your changes yet
+    2) ```Staged``` : You have marked a modified file to be present in the next snapshot of your file system,
+    information about such changes are present in file with name index thats why we can say files are staged
+    or file at index {Both are correct}
+    3) ```Committed``` : Data is safely stored in your local database {Snapshot}
 
 
 - Every snapshot of the files contains information about the author of the snapshot, this is done
 to easily identify who broke system or created defect file
 
 - Configuration levels:
-    - System : All local users in PC + All their repositories
-    - Global : All repositories on the computer for current user
-    - Local : Only current repository {After running $ git init to create .git folder}
+    - ```System``` : All local users in PC + All their repositories
+    - ```Global``` : All repositories on the computer for current user
+    - ```Local``` : Only current repository {After running $ git init to create .git folder}
 
 - Note : Values on the lower level overrides valued of the upper level
 
 - Example:
-$ git config --global user.name
+```
+git config --global user.name
+```
 
-
-- All of git command are written in git bash {Windows}
+- All of git command are written in git bash {Windows} OR in terminal {Linux}
 
 
 - To Tell git who you are
-$ git config --global user.name "AA"
-$ git config --global user.email "AA@gmail.com"
+```
+git config --global user.name "AA"
+git config --global user.email "AA@gmail.com"
+```
 
 - Note: Any commit will be save your email and your name to know who did what
 
 
 - To check value of user.name
-$ git config user.name
-
+```
+git config user.name
+```
 
 - To check value of user.nemail
-$ git config user.email
-
+```
+git config user.email
+```
 
 - List all properties with values
-$ git config -l
+```
+git config -l
+```
 OR
-$ git config --list
-
+```
+git config --list
+```
 
 - To change default text editor, make vi editor your default editor
-$ git config --global core.editor "vi"
-OR
-$ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
-
-
+```
+git config --global core.editor "vi"
+```
+OR Use Notepad++ in windows
+```
+git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
+```
 
 
 6. Git repo init, First commit and main branch  :
@@ -79,43 +87,56 @@ $ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
 
 
 - Create a local repo {Creating a .git directory}
-$ git init
-
+```
+git init
+```
 
 - Add file.txt to stage area
-$ git add file.txt
-
+```
+git add file.txt
+```
 
 - Add some specific files to staging area
-$ git add file1.txt file2.txt file3.txt
-
+```
+git add file1.txt file2.txt file3.txt
+```
 
 - Add all files that end with .cpp extension to stage area {Mask Method}
-$ git add *.cpp
-
+```
+git add *.cpp
+```
 
 - Add all files/folders to stage area
-$ git add .
-
+```
+git add .
+```
 
 - Check status of repo in your current branch
-$ git status
+```
+git status
+```
 
-
-- Check status of repo in your current branch with short version {flag -s}
-$ git status -s
-> A : stands for files are ADDED to staging area and need to be committed
+- Check status of repo in your current branch with short version flag ```-s```
+```
+git status -s
+```
+> A : stands for files are ADDED to staging area and need to be committed <br>
 > ?? : untracked file {file that is created in working directory while its not in staging area}
 
 
 - If you forgot any command use --help flag
-$ git status --help
+```
+git status --help
+```
 OR
-$ git status -h
-
+```
+git status -h
+```
 
 - Commit new changes {Create a snapshot (version)}
-$ git commit -m "Message"
+```
+git commit -m "Message"
+```
 > -m : message that describes changes that happened in that snapshot (version)
 
 
@@ -123,11 +144,12 @@ $ git commit -m "Message"
 
 
 - Add to stage area & Commit in one line
-$ git commit -a -m "Message"
+```
+git commit -a -m "Message"
+```
 > -a : Tell the command to automatically stage files that have been modified and deleted, but new files
 you have not told Git about are not affected.
 - VIP Note : This works only if you have modified an existing file NOT creating a new one
-
 
 
 
@@ -141,110 +163,132 @@ and configuration files
 
 
 - Remove a file from staging area
-$ git rm --cached file.txt
-> If you didn't use flag [--cached] it is going to remove file from file system too, Be Curefull
+```
+git rm --cached file.txt
+```
+> If you didn't use flag ```--cached``` it is going to remove file from file system too, Be Curefull
 
 
 - Remove a folder from staging area
-$ git rm -r --cached <DirName>
-> If you didn't use flag [--cached] it is going to remove folder from file system too, Be Curefull
+```
+git rm -r --cached <DirName>
+```
+> If you didn't use flag ```--cached``` it is going to remove folder from file system too, Be Curefull
 
 
 - Ignore Files Or Directories
-$ touch .gitignore
-$ nano .gitignore
-Inside it
-{
+```
+touch .gitignore
+nano .gitignore
+```
+Inside it :
+```
     *.class     # All files that ends with extension .class
     bin/        # Any file in bin folder
     file1.txt   # Ignore Specific file
-}
--> then you can use $ git add . and those files are not going to be added to staging area
+```
+- Then you can use ```git add .``` and those files are not going to be added to staging area
 
-- After adding .gitignore file it will be shown as an untracked file {that is needed to be added to staging area}
-you also can ignore it by typing it in .gitignore file HAHAHAHA
+- After adding ```.gitignore``` file it will be shown as an untracked file {that is needed to be added to staging area}
+you also can ignore it by typing it in ```.gitignore``` file HAHAHAHA
 
 
 - View previous log of created commits in your current local branch
-$ git log
-
+```
+git log
+```
 
 - View last 2 log of created commits in your current local branch
-$ git log -2
+```
+git log -2
+```
 
-
--Change formatting to show only Hash ID and Commit message {Not used widely}
-$ git log --pretty=oneline
-
+- Change formatting to show only Checksum (Hash ID) and Commit message {Not used widely}
+```
+git log --pretty=oneline
+```
 
 
 8. Git undoing things & Vi text editor :
 ----------------------------------------
 
 - Change comment of last commit {You are NOT creating a new commit}
-$ git commit --amend
-> and then terminal will open VI to edit message of last commit
-- VIP Note: if your staging area is same as your last local commit then you used [--amend] option, this will just
-change message of last commit, but if your staging area is different from last commit {you have added a new file for example}
-then after using [--amend] option last commit will contains your new staging area {Will be overridden}
-{amend takes your current staging area and override last commit content (if both are same nothing will be changed)
-+ being able to change its message}
+```
+git commit --amend
+```
+> And then terminal will open VI to edit message of last commit
+- VIP Note: if your staging area is same as your last local commit then you used ```--amend``` option, this will just
+change message of last commit, but if your staging area is different from last commit {you have added a new file for example}, then after using ```--amend``` option last commit will contains your new staging area {Will be overridden}
+{```--amend``` takes your current staging area and override last commit content (if both are same nothing will be changed) + being able to change its message} <br>
 > Checksum {Hash Code} of commit will change
 
 
-- To add latest staging area in previous commit {You are NOT creating a new commit}
-$ git commit --amend --no-edit
-> [--amend --no-edit] option is same as [--amend] but without allowing you to change the last commit message
+- Add latest staging area in previous commit {You are NOT creating a new commit}
+```
+git commit --amend --no-edit
+```
+> ```--amend --no-edit``` option is same as ```--amend``` but without allowing you to change the last commit message <br>
 > Checksum {Hash Code} of commit will change
 
 
-- To unstage a file from staging area
-$ git restore --staged <FileName>
+- Unstage a file from staging area
+```
+git restore --staged <FileName>
+```
 OR
-$ git restore --staged *
-> VIP Note : $ git rm --cached <FileName> command will remove file from staging area whether this file is modified or just added
-while $ git restore --staged <FileName> command For modified file its not going to remove it from staging area,
-its going to neglect changes of it {this is done if you added new modified file to staging area accidentally but you want
-while you don't want to commit that change so you undo it} OR it removes new ADDED file from staging area
+```
+git restore --staged *
+```
+> VIP Note : ```git rm --cached <FileName>``` command will remove file from staging area whether this file is modified or just added, while ```git restore --staged <FileName>``` command For modified file its not going to remove it from staging area, its going to neglect changes of it {this is done if you added new modified file to staging area accidentally but you don't want to commit that change so you undo it from staging area} OR it removes new ADDED file from staging area
 
 
-- To restore a file from last commit {Will remove any changes in that file}
-$ git restore <FileName>
-> Note : this can take place when changed file is not in staging area {you didn't yet use $ git add},
+- Restore a file from last commit {Will remove any changes in that file}
+```
+git restore <FileName>
+```
+> Note : this can take place when changed file is not in staging area {you didn't yet use ```git add .```},
 if file is changed (from last commit) but in staging area you cannot restore it,
 you only can restore it when changed file is in modified area
 
 - Note: we can restore anything that is committed, while changes that aren't saved in commits can not be restored
-
+{```git reflog```}
+    
 - Show files in staging area
-$ git ls-files
-
+```
+git ls-files
+```
 
 
 
 9. Git remote repositories :
 ----------------------------
 
-
+    
 - Check if your local repo is connected to remote repo
-$ git remote -v
+```
+git remote -v
+```
 > Will list all created remote repos
 
 
 - Add a new remote repo with shorthand name "origin"
-$ git remote add origin <GitHubLink>
-> origin will now be used instead of GitHub URL to make referencing much more easier
+```
+git remote add origin <GitHubLink>
+```
+> ```origin``` will now be used instead of GitHub URL to make referencing much more easier
 
 
 - Push your commits & Connect local master branch with remote master branch
-$ git push origin -u <master>
-> -u : stands for upstream {This will link local repo to remote one, then when you enter $ git pull it will understand that
-you want to pull changed from exactly that remote branch}
+```
+git push origin -u <master>
+```
+> -u : stands for upstream {This will link local repo to remote one, then when you enter ```git pull``` it will understand that you want to pull changed from exactly that remote branch}
 
 
 - Clone remote repo to your machine
-$ git clone <GitHubLink>
-
+```
+git clone <GitHubLink>
+```
 
 
 
@@ -252,22 +296,24 @@ $ git clone <GitHubLink>
 --------------------
 
 
-SSH {Secure Socket Shell} : its a secured protocol that allows you to connect to remote computer using terminal
+- SSH {Secure Socket Shell} : its a secured protocol that allows you to connect to remote computer using terminal
 using SSH you can log in to another computer from anywhere and perform any command on it
 - The goal of SSH is to make remote connections to computers much more secure
 - Establish a SSH connection to identify yourself without using username/password everytime
-- SSH keys comes in pairs :public and private
+- SSH keys comes in pairs : public and private
 - Public key can be stored in any remote server as GitHub
 - Private key is stored in your machine
 
 
-- To change remote URL of already created remote repo {EX: origin}
-$ git remote set-url origin <NewGitHubLink>
+- Change remote URL of already created remote repo {EX: origin}
+```
+git remote set-url origin <NewGitHubLink>
+```
 
-
-- To remove a remote repo from your machine
-$ git remote rm <RemoteRepoName>
-
+- Remove a remote repo from your machine
+```
+git remote rm <RemoteRepoName>
+```
 
 
 11. Git Branching :
@@ -275,86 +321,114 @@ $ git remote rm <RemoteRepoName>
 
 
 - Create a new LOCAL branch
-$ git branch <BranchName>
-
+```
+git branch <BranchName>
+```
 
 - List all LOCAL Branches
-$ git branch
-
+```
+git branch
+```
 
 - List all REMOTE Branches
-$ git branch -r
+```
+git branch -r
+```
 > -r: stands for remote
 
 
 - List ALL Branches {LOCAL + REMOTE}
-$ git branch -a
--> -a: stands for all {Linux}
+```
+git branch -a
+```
+> -a: stands for all {Linux}
 
 
-- Note : $ git branch command is not used among developers as this only create the
-branch but not switch to it, they prefer to use $ git checkout command that creates the branch then switch to the created branch
+- Note : ```git branch``` command is not used among developers as this only create the
+branch but not switch to it, they prefer to use ```git checkout``` command that creates the branch then switch to the created branch
 
 
 - Switch to a branch
-$ git checkout <BranchName>
-
+```
+git checkout <BranchName>
+```
 
 - Create a new Local branch then switch to it
-$ git checkout -b <BranchName>
--> -b: stands for branch
+```
+git checkout -b <BranchName>
+```
+> -b: stands for branch
 
 
 - New command in latest git version: {Not common as it is new}
 - Switch to a branch
-$ git switch <BranchName>
-
+```
+git switch <BranchName>
+```
 
 - Create a new branch then switch to it
-$ git switch -c <BranchName>
--> -c: stands for create
+```
+git switch -c <BranchName>
+```
+> -c: stands for create
 
 
 - Navigate back to previous branch
-$ git switch -
+```
+git switch -
+```
 
-
--Note: Branch name should be descriptive {what changes will be in this branch}
+- Note: Branch name should be descriptive {what changes or features will be in this branch}
 
 
 - Show commits of current branch
-$ git log
-> Note : your branch will have commits of master + commits of it, as git creates a pointer to last commit of master so it have
-the commits history of master branch
-
-
+```
+git log
+```
+> Note : your branch will have same commits history of master + commits of it {In future}, as Git creates a pointer to last commit of master so it have the commits history of master branch
+```
+A--B--C <-- Master/Branch
+       \    Branch {No commits yet}
+```
+            
 - Show commits of ALL branch
-$ git log -all
-
+```
+git log -all
+```
 
 - Show commits of a specific branch
-$ git log <BranchName>
-> Can also work with remote repo example : $ git log origin/master
+```
+git log <BranchName>
+```
+> Can also work with remote repo example : ```git log origin/master```
 
 
 - Remove a LOCAL branch
-$ git branch -d|D <BranchName>
--> -d: stands for delete
+```
+git branch -d|D <BranchName>
+```
+> -d: stands for delete
 
 
 - Remove a REMOTE branch {In GitHub}
-$ git push <RemoteName> --delete <BranchName>
-EX: $ git push origin --delete Branch#2
-
-
+```
+git push <RemoteName> --delete <BranchName>
+```
+- Example:
+```
+git push origin --delete Branch#2
+```
+- If you forget that command {or any other one} use Linux grep : ```git push origin --help | grep delete```
+    
 - VIP Note :
 - You can navigate to different commits using commit checksum {Hash ID}
-$ git checkout <checksum>
-- Now you are in detached HEAD state, you are not in a specific branch
-- You can use this feature to navigate to different versions of your codes
-- you can also create a commit in this state {Not Recommended} but once you have switched [$ git switch -]  from this state
-you wont be able to see this commit in commit tree history {Not saved in it}, but you can navigate to it again if you have saved
-its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
+```
+git checkout <checksum>
+```
+- Now you are in ```detached HEAD``` state, you are not in a specific branch
+- You can use this feature to navigate to different versions of your codes and observe changes in working directory files
+- you can also create a commit in this state {Not Recommended} but once you have switched ```git switch -```  from this state, you wont be able to see this commit in commit tree history {Not saved in it}, but you can navigate to it again if you have saved
+its commit checksum, For Example : ```$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a```
 
 
 
@@ -367,9 +441,10 @@ its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
         2) Squash and Merge
         3) rebase and Merge
 
-
-
-
+- Rest is in GitHub Pull Request Menu
+    
+    
+    
 13. Updating local repository (fetch, merge, pull) & Team development demo :
 ----------------------------------------------------------------------------
 
@@ -378,37 +453,41 @@ its commit checksum {$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a}
 - Region Master Branch -> branch in GitHub Repo
 
 
-- In case some commits are exist in Region Master Branch, while local is not aware of use $ git fetch command
-VIP note: if you are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
-LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
-LOCAL Master branch -> REMOTE Master branch
+- In case some commits are exist in Region Master Branch, while local is not aware of use ```git fetch``` command
 
-
-$ git fetch
+- VIP note: if you are on Devloper#1 branch LOCALLY then using fetch will search for any changes in REMOTE Devloper#1 branch
+- LOCAL Devloper#1 branch -> REMOTE Devloper#1 branch
+- LOCAL Master branch -> REMOTE Master branch
+```
+git fetch
+```
 > if there is a message, this means that some changes were downloaded from remote, if not you are up to date
 - Note : it just tells you that some changes are exist in remote but not in your local machine, but it don't pull them {merge them to your local branch}
-- VIP Note : $ git fetch command will work only one time and after fetching data from remote repo into local one, if you use this
+- VIP Note : ```git fetch``` command will work only one time and after fetching data from remote repo into local one, if you use this
 command again it wont work {As you already fetched new changes}
 
 - Then what is the purpose of this command at all?
-- Imagine that you are working on the new changes and you don't want to merge latest code into your branch.
-And you would like to know whether there are any changes in remote branch that are needed to be merged
-then use $ git fetch command
+- Imagine that you are working on the new changes and you don't want to merge latest code into your branch, And you would like to know whether there are any changes in remote branch that are needed to be merged
+then use ```git fetch``` command
 
 
-- If you want to download all changes from region master branch to your local master branch {VIP Note in Line #173 is also applied}
-$ git merge
+- If you want to download all changes from region master branch to your local master branch {VIP Note in Line #458 is also applied}
+```
+git merge
+```
+
+- Git pull is combination of fetch + merge {both in one step} {VIP Note in Line #458 is also applied}
+```
+git pull origin master
+```
 
 
-- Git pull is combination of fetch + merge {both in one step} {VIP Note in Line #173 is also applied}
-$ git pull
-
-
-
-14. Merge Conflicts --------------------------------------------------------------------------------
+    
+14. Merge Conflicts :
+---------------------
 
 -> Image if you in remote master branch have a [Web/index.html] that contains
-===============================
+```
 <html>
 <head>
 </head>
@@ -416,11 +495,11 @@ $ git pull
 <h1>Hello World</h1>
 </body>
 </html>
-=================================
+```
 
-now you have created a new branch [developer#1] from remote master for first developer
-in this branch developer add a [style/index.css] file and edit [Web/index.html] to be:
-===============================
+- Now you have created a new branch ```developer#1``` from remote master for first developer
+in this branch developer add a ```style/index.css``` file and edit ```Web/index.html``` to be:
+```
 <html>
 <head>
 <link rel="stylesheet" href="../style/index.css">
@@ -429,13 +508,13 @@ in this branch developer add a [style/index.css] file and edit [Web/index.html] 
 <h1>Hello World</h1>
 </body>
 </html>
-=================================
-then push this branch into new remote branch called [developer#1]
+```
+- Then push this branch into new remote branch called ```developer#1```
 
 
-- now you have created a new branch [developer#2] from remote master for second developer
-in this branch developer add a [style1/index123.cdd] file and edit [Web/index.html] to be:
-===============================
+- Now you have created a new branch ```developer#2``` from remote master for second developer
+in this branch developer add a ```style1/index123.cdd``` file and edit ```Web/index.html``` to be:
+```
 <html>
 <head>
 <link rel="stylesheet" href="../style1/index123.css">
@@ -444,25 +523,25 @@ in this branch developer add a [style1/index123.cdd] file and edit [Web/index.ht
 <h1>Hello World</h1>
 </body>
 </html>
-=================================
-then push this branch into new remote branch called [developer#2]
+```
+- Then push this branch into new remote branch called ```developer#2```
 
-- Now if you pull then merged [developer#1] branch into master in GitHub, this will be fine
-but if you then want to pull then merged [developer#2] branch into master{master + developer#1} in GitHub
-there will be a conflict , why??
-because commit of [developer#1] branch is that it added a new [style/index.css] then edited line #3 in [Web/index.html]
+- Now if you pull then merged ```developer#1``` branch into master in GitHub Menu, this will be fine but if you then want to pull then merged ```developer#2``` branch into master {master + developer#1} in GitHub there will be a conflict , why??
+- Because commit of ```developer#1``` branch is that it added a new ```style/index.css``` then edited line #3 in ```Web/index.html```
 and after merging it into master branch, the last commit will be this commit
-- Then as last commit of [developer#2] branch is that it added a new [style1/index123.css] then edited ALSO line #3 in [Web/index.html] {Same file Same Line}
-this means that there will be a conflict in  line #3 in [Web/index.html] as in both commits this line is edited
-so you cannot merge [developer#2] branch unless you fixed this conflict, this is done by first
-$ git pull origin master
--> add new changes from remote master {these changes are commit of developer#1 branch Line #240 here}
-- then edit this file
-$ nano [Web/index.html]
-then add . and commit then pull to remote [developer#2] branch, at this moment
-there will be no conflicts in pull page in GitHub, and you can now merge it into master branch only by {MERGE COMMIT Option} will know later why
+- Then as last commit of ```developer#2``` branch is that it added a new ```style1/index123.css``` then edited ALSO line #3 in ```Web/index.html``` {Same file, Same Line}
+- This means that there will be a conflict in  line #3 in ```Web/index.html``` as in both commits this line is edited, so you cannot merge ```developer#2``` branch unless you fixed this conflict, this is done by first
+```
+git pull origin master
+```
+> Add new changes from remote master {these changes are commit of developer#1 branch Line #500 here}
+- Then edit this file
+```
+nano Web/index.html
+```
+- Then use ```git add .``` and ```git commit``` then pull to remote ```developer#2``` branch, at this moment, there will be no conflicts in pull page in GitHub, and you can now merge it into master branch only by {MERGE COMMIT Option} will know later why
 
-NOTE : This method for fixing conflicts is not best practice
+- NOTE : This method for fixing conflicts is not best practice
 
 
 
@@ -471,17 +550,24 @@ NOTE : This method for fixing conflicts is not best practice
 ------------------------------------------------------
 
 
-$ git rebase            -> To rebase changes from another Branch
+```
+git rebase
+```
+> To rebase changes from another Branch
 VS
-$ git pull --rebase     -> fetch + rebase command, this means that it first fetch from remote repo and then rebase
+```
+git pull --rebase 
+```
+> fetch + rebase command, this means that it first fetch from remote repo 
+and then rebase
 
------------------------------
+```
   0--
  /   \
 0-----0
  \
   0---0
------------------------------
+```
 - After solving a conflict {Editing files} use this command to continue rebase process
 $ git rebase --continue
 
