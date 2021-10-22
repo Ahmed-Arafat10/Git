@@ -557,16 +557,18 @@ then save and close editor
 
 
 
-- You can combine {squash} many commits into just one commit to ensure git clean history{If they are all related to same feature}
+- You can combine {squash} many commits into just one commit to ensure git clean history {If they are all related to same feature}
 $ git rebase -i HEAD~3
 
 - Then subititite for [s -> squash] insted of [pick] for all commits except first one then save and close editor
 
 - Note: merge conflict may happens during squashing so you will fix it manully
 - it then will merge those commits in just one new commit that will have a different checksum {Hash ID}
-+ changing git commit history, so to pull these changes into your remote feature branch use:
+- As we are changing git commit history of local repo, so to pull these changes into your remote feature branch you have
+to force pull as tree history of local becomes differnet from remote one, then use:
 $ git push --force-with-lease origin <BranchName>
-
+> Remember : [--force-with-lease] It is a safer option that will not override any work on the remote branch if more commits were added to the remote
+branch by another team member.
 
 
 
@@ -580,19 +582,47 @@ $ git push --force-with-lease origin <BranchName>
     - Restore state of the remote branch
     - Restore state of the branch after unsuccessful rebase
 
-- Go back to a commit in which all changes are in staging area waiting to be commited {$ git commit -m}
+- Go back to a commit, in which all files in latest commit will present in working directory but changes betwen old
+and lastest commit will be in staging area waiting to be commited {$ git commit -m}
 $ git reset --soft <CommitID>
+OR
+$ git reset --soft HEAD~n
 
+--------------------------------------------------------
+Commit #10 : p1,p2,p3,p4,p5
+..
+..
+Commit #5 : p1,p2
+use : $ git reset --soft HEAD~5
+Now working directory is : p1,p2,p3,p4,p5 {Not changed from lastest Commit}
+Now Staging Area is : p3,p4,p5 are waiting to be commited { Staging Area of Commit #10 }
+Now lastest commit is : p1,p2 { Commit #5 }
+--------------------------------------------------------
 
-- Go back to a commit in which all changes are in untracked mode waiting to be in staging area {git add .}
-then to be commited {$ git commit -m}
+- Go back to a commit, in which all files in latest commit will present in working directory but changes betwen old
+and lastest commit are in untracked mode waiting to be in staging area {git add .}, then to be commited {$ git commit -m}
 $ git reset --mixed <CommitID>
+OR
+$ git reset --mixed HEAD~n
 OR
 $ git reset <CommitID>
 - Default option without any flags is [--mixed]
+--------------------------------------------------------
+Commit #10 : p1,p2,p3,p4,p5
+..
+..
+Commit #5 : p1,p2
+use : $ git reset --mixed HEAD~5
+Now working directory is : p1,p2,p3,p4,p5 {Not changed from lastest Commit}
+Now Staging Area is : p3,p4,p5 are untracked files { Staging Area of Commit #5 so, needed to use $ git add .}
+Now lastest commit is : p1,p2 { Commit #5 }
+--------------------------------------------------------
 
 
-- Go back to a commit in which all changes will reset your files in working directory {Replace them}
+
+
+
+- Go back to a commit in which files in working directory will be same as commit you have chosen {Replace them}
 $ git reset --hard <CommitID>
 
 
@@ -601,7 +631,16 @@ $ git reset --hard HEAD~3
 OR
 $ git reset --hard <CheckSumID>
 
-
+--------------------------------------------------------
+Commit #10 : p1,p2,p3,p4,p5
+..
+..
+Commit #5 : p1,p2
+use : $ git reset --hard HEAD~5
+Now working directory is : p1,p2 { Same As Commit #5 }
+Now Staging Area is : p1,p2 { Same As Commit #5 }
+Now lastest commit is : p1,p2 { Same As Commit #5 }
+--------------------------------------------------------
 
 - If you want to rest working tree as it is in a remote repo :
         - To fetch latest state of remote repository
@@ -612,15 +651,18 @@ $ git reset --hard <CheckSumID>
 
 
 
-18. Git stash -----------------------------------------------------------------------------------
+
+18. Git stash :
+---------------
+
 
 - When to use stash:
     - Temporarily put work aside
-    - Apply the same changes on multiple brmaches
+    - Apply the same changes on multiple branches
     - Create new Branch based on the current changes later
 
-- Now if you have modified some files and used $ git status , those files will be presented in section of waiting to be Staged
-- Add modified OR new files to stash {Not present in staging area}
+- Now if you have modified some files and used $ git status, those files will be presented in section of waiting to be Staged
+- Add modified OR new files to stash {Not presented yet in staging area}
 $ git stash
 > Now changes are in stash
 
@@ -642,18 +684,20 @@ $ git stash list
 $ git stash apply stash@{N}
 
 
-- Add modified OR new files to stash {Not present in staging area} with a MEESAGE {Best Practice}
+- Add modified OR new files to stash {Not present in staging area} with a MESSAGE {Best Practice}
 $ git stash save "Message"
 
 
-- If you need changes that are saved in TOP of stash {Import them} then REOMVE IT
+- If you need changes that are saved in TOP of stash {Import them} and then REMOVE IT
 $ git stash pop
 
 
-- VIP Note : You can only stash files that are in staging area OR files that are tracked by git
+- VIP Note : - You can only stash files that are in staging area OR files that are tracked by git
+             - Stash only save file that is modified {Not all other files in working directory}
+             - A conflict may arise will useing stash so fix it manually
 
 
-- stash can save untracked files {files that are created but not in staging area}
+- Stash can save untracked files {files that are created but not in staging area}
 - To add them in stash
 $ git stash -u
 > -u : stands for untracked files
@@ -669,21 +713,126 @@ $ git stash branch <BranchNameYouWantToCreate> <StashID>
 > Without specifing stach ID first stash from stack will be used
 
 
-- Remove a stash form stack {without appling it}
+- Remove a stash form stack {without applying it}
 $ git stash drop stash@{N}
 
 
-- Clear ALL stash form stack {without appling it}
+- Clear ALL stash form stack {without applying it}
 $ git stash clear
 
 
-19. Git reflog-------------------------------------------------------------------------------------
 
-EMPTY
 
-20. Git cherry-pick-------------------------------------------------------------
+19. Git reflog :
+----------------
 
-EMPTY
+- While using git you may lose a commit foe example you used force delete or hard reset or interactinve rebase to squash
+commits
+- In git anything that is commited can be restored, git wont never restore files that were nver in staging are or not commited before
+
+- WHile we are working , git silently records what our head pointer and how does it look like
+- Each time we create a snapshot or switch branchs the reflog is updated
+
+- Navigate history of all changes in repo using :
+$ git reflog
+
+- Each commit , reset on origin/master branch, different branches
+
+
+- Show all commits with reflog referenece and copy Checksum of deleted commit
+$ git log -g
+
+
+- Create a new branch with Checksum of deleted commit
+$ git branch lost_changes <CommitCheckSum>
+> Now lost_changes branch will contains same files as deleted commit
+
+
+- Note: information in reflog is stored for 90 days
+
+- Simulate a situation -> if you have used --hard rest command to go back to prevoius commit {from commit (REMOVINGGG) to commit (REMOVINGGG)},
+then you want to restore deleted Commit (REMOVINGGG)
+
+- Show reflog for past 1 hour
+$ git reflog --since="1.hour"
+> day is used also instead of hour
+
+
+---------------------------------------
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{0}: reset: moving to HEAD@{1}
+981ecb1 (lost_changes) HEAD@{1}: reset: moving to HEAD@{3}
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{2}: reset: moving to HEAD@{1}
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{3}: reset: moving to HEAD@{0}
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{4}: reset: moving to a2ef2d547d4e34f47c22fc6a499f632ec14a7a32
+981ecb1 (lost_changes) HEAD@{5}: commit: REMOVINGGG
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{6}: checkout: moving from test1 to master
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{7}: checkout: moving from master to test1
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{8}: checkout: moving from test to master
+b0326e1 (test) HEAD@{9}: commit: ddd
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{10}: checkout: moving from master to test
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{11}: reset: moving to HEAD
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{12}: checkout: moving from test to master
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{13}: checkout: moving from master to test
+a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{14}: checkout: moving from test to master
+--------------------------------------
+
+
+- Now restore comit history to that commit
+$ git reset --hard HEAD@{n}
+
+Above Example : $ git reset --hard HEAD@{5}
+
+- Now deleted commit will be restored
+
+
+
+
+20. Git cherry-pick :
+---------------------
+
+- Used to modify commit history {Not The Best Practice}, regular merge is prefered when it is possible
+
+- When to use cherry-pick : - Deliver hotfix to the end user as fast as possible
+                            - Undoing changes and restoring lost commits
+                            - Regular team collaboration
+
+
+-------------------------------------------------------
+
+    G--H                  Feature
+   /
+A--B--C--D--E--F--H*      Production
+       \
+        I
+-------------------------------------------------------
+
+- cherry-pick is used to just take one commit from a feature branch and put it on top of another branch
+- Not The Best Practice
+
+- Go to branch you want to copy commit in and type :
+$ git cherry-pick <CommitCheckSum>
+
+
+- To continue cherry-picking process after resolving a conflict
+$ git cherry-pick --continue
+
+
+- If something went wrong during resolving a conflict and want to stop cherry-picking process
+$ git cherry-pick --abort
+
+
+- Cherry-pick multiple commits at once
+$ git cherry-pick <CommitCheckSum1> <CommitCheckSum2> <CommitCheckSum3>
+
+
+- Best practices og using cherry pick:
+    - Prefer merge or rebase when possible
+    - Avoid creating any duplication
+    - Use 'x' option during cherry-pick command, this will specify hash code of original commit
+      $ git cherry-pick -x
+    - This will automateclly add hash code of original commit in comment message of new one
+
+
 
 
 21. Cloning remote repository: git clone :
@@ -694,12 +843,7 @@ $ git clone <GitHubURL>
 
 
 
-
-
-
-
-
-
+----------------------------EXTRA-------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -874,3 +1018,4 @@ $ git push origin -u master
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
