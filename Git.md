@@ -569,20 +569,22 @@ and then rebase
   0---0
 ```
 - After solving a conflict {Editing files} use this command to continue rebase process
-$ git rebase --continue
-
+```
+git rebase --continue
+```
 
 - To Stop rebase process
-$ git rebase --abort
-
+```
+git rebase --abort
+```
 
 - To skip conflict {Not recommended at all}
-$ git rebase --skip
+```
+git rebase --skip
+```
 
-
-
-
-- Now after resloving the conflict add modified files in staging area {$ git add .} then continue rebase process {$ git rebase --continue}
+    
+- Now after resloving the conflict add modified files in staging area ``` git add .``` then continue rebase process ```$ git rebase --continue```
 
 -----------------------------
   0--               Feature#1
@@ -592,36 +594,36 @@ $ git rebase --skip
          0---0      Feature#2
 -----------------------------
 
-- Now if you $ git push into Feature#2 it will gives you an error, thats because remote Feature#2 branch has a different
-commit history compared to local one, because $ git rebase command changes git history . NOw both local and remote remote Feature#2 branch
-commit history
+- Now if you ```git push``` into Feature#2 it will gives you an error, thats because remote Feature#2 branch has a different commit history compared to local one, because ```git rebase``` command changes git history. Now both local and remote Feature#2 branch
+commit history is not same as each other
 
 - I need to tell git which version is correct
-$ git push -f
-> BE CAREFUL as it will overrides remote branch commit history with your local one
+```
+git push -f
+```
+> BE CAREFUL as it will overrides remote branch commit history with your local one <br>
 > Use it with only branches not with MASTER branch
------------------------------
+
+```
 Remote A---B---C---D
 Local  A--E
 $ git push -f
 Now remote branch will be: Remote A--E
 {ALL of remote tree will be same as local tree}
------------------------------
+```
 
 
-Four rules of happiness:
-1) Always create branched from master, not from the other development branches.
-2) Force update and change commit history only on your branch you are sure no body use it
-3) use --force-with-lease instead of -f
-4) Always rebase on the origin master branch before creating a pull request
+- Four rules of happiness:
+    1) Always create branched from master, not from the other development branches.
+    2) Force update and change commit history only on your branch you are sure no body use it
+    3) use ```--force-with-lease``` instead of ```-f```
+    4) Always rebase on the origin master branch before creating a pull request
 
-- It is a safer option that will not override any work on the remote branch if more commits were added to the remote
-branch by another team member.
-$ git push --force-with-lease
-
-> best practice : rebase on the region master as often as you can to fix conflicts gradually and to test your
-implementation on the latest version of the code during     the development to not spend a lot of time.
-
+- It is a safer option that will not override any work on the remote branch if more commits were added to the remote branch by another team member.
+```
+git push --force-with-lease
+```
+> Best practice : rebase on the region master as often as you can to fix conflicts gradually and to test your implementation on the latest version of the code during the development to not spend a lot of time.
 
 
 
@@ -631,32 +633,36 @@ implementation on the latest version of the code during     the development to n
 
 
 - If you want to change message of last Commit
-$ git commit --amend
-
+```
+git commit --amend
+```
 - But what if you want to change second last one
 
-- Interactive Rebase : It makes it easy to clean up your commits before they get rebased or moved into another branch
+- ```Interactive Rebase``` : It makes it easy to clean up your commits before they get rebased or moved into another branch
 
-$ git rebase -i HEAD~3
+```
+git rebase -i HEAD~3
+```
 > i: stands for interactive rebase
 
-- Then substitute for [r -> reward] instead of [pick] in commit you want to change its message
+- Then substitute for ```r``` -> ```reward``` instead of ```pick``` in commit you want to change its message
 then save and close editor
 
 
 
 - You can combine {squash} many commits into just one commit to ensure git clean history {If they are all related to same feature}
-$ git rebase -i HEAD~3
+```
+git rebase -i HEAD~3
+```
+- Then substitute for ```s``` -> ```squash``` instead of ```pick``` for all commits except first one then save and close editor
 
-- Then substitute for [s -> squash] instead of [pick] for all commits except first one then save and close editor
-
-- Note: merge conflict may happens during squashing so you will fix it manually
-- it then will merge those commits in just one new commit that will have a different checksum {Hash ID}
-- As we are changing git commit history of local repo, so to pull these changes into your remote feature branch you have
-to force pull as tree history of local becomes different from remote one, then use:
-$ git push --force-with-lease origin <BranchName>
-> Remember : [--force-with-lease] It is a safer option that will not override any work on the remote branch if more commits were added to the remote
-branch by another team member.
+- Note : merge conflict may happens during squashing so you will fix it manually
+- It then will merge those commits in just one new commit that will have a different checksum {Hash ID}
+- As we are changing Git commit history of local repo, so to pull these changes into your remote feature branch you have to force pull as tree history of local becomes different from remote one, then use:
+```
+git push --force-with-lease origin <BranchName>
+```
+> Remember : ```--force-with-lease``` It is a safer option that will not override any work on the remote branch if more commits were added to the remote branch by another team member.
 
 
 
@@ -664,19 +670,23 @@ branch by another team member.
 --------------
 
 
-- When to use $ git reset:
+- When to use ```git reset```:
     - Undo last changes
     - Change commit history
     - Restore state of the remote branch
     - Restore state of the branch after unsuccessful rebase
 
 - Go back to a commit, in which all files in latest commit will present in working directory but changes between old
-and latest commit will be in staging area waiting to be committed {$ git commit -m}
-$ git reset --soft <CommitID>
+and latest commit will be in staging area waiting to be committed ```git commit -m```
+```
+git reset --soft <CommitID>
+```
 OR
-$ git reset --soft HEAD~n
-
---------------------------------------------------------
+```
+git reset --soft HEAD~n
+```
+    
+```
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -685,17 +695,24 @@ use : $ git reset --soft HEAD~5
 Now working directory is : p1,p2,p3,p4,p5 {Not changed from latest Commit}
 Now Staging Area is : p3,p4,p5 are waiting to be committed { Staging Area of Commit #10 }
 Now latest commit is : p1,p2 { Commit #5 }
---------------------------------------------------------
+```
 
 - Go back to a commit, in which all files in latest commit will present in working directory but changes between old
-and latest commit are in untracked mode waiting to be in staging area {git add .}, then to be committed {$ git commit -m}
-$ git reset --mixed <CommitID>
+and latest commit are in untracked mode waiting to be in staging area ```git add .```, then to be committed ```$ git commit -m```
+```
+git reset --mixed <CommitID>
+```
 OR
-$ git reset --mixed HEAD~n
+```
+git reset --mixed HEAD~n
+```
 OR
-$ git reset <CommitID>
-- Default option without any flags is [--mixed]
---------------------------------------------------------
+```
+git reset <CommitID>
+```
+> Default option without any flags is ```--mixed```
+
+```
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -704,20 +721,25 @@ use : $ git reset --mixed HEAD~5
 Now working directory is : p1,p2,p3,p4,p5 {Not changed from latest Commit}
 Now Staging Area is : p3,p4,p5 are untracked files { Staging Area of Commit #5 so, needed to use $ git add .}
 Now latest commit is : p1,p2 { Commit #5 }
---------------------------------------------------------
+```
 
 
 
 - Go back to a commit in which files in working directory will be same as commit you have chosen {Replace them}
-$ git reset --hard <CommitID>
-
+```
+git reset --hard <CommitID>
+```
 
 - Go back 3 previous commit
-$ git reset --hard HEAD~3
+```
+git reset --hard HEAD~3
+```
 OR
-$ git reset --hard <CheckSumID>
-
---------------------------------------------------------
+```
+git reset --hard <CheckSumID>
+```
+    
+```
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -726,15 +748,17 @@ use : $ git reset --hard HEAD~5
 Now working directory is : p1,p2 { Same As Commit #5 }
 Now Staging Area is : p1,p2 { Same As Commit #5 }
 Now latest commit is : p1,p2 { Same As Commit #5 }
---------------------------------------------------------
+```
 
 - If you want to rest working tree as it is in a remote repo :
-        - To fetch latest state of remote repository
-        $ git fetch --all
-
-        - To restore the state of remote master branch
-        $ git reset --hard origin/master
-
+- To fetch latest state of remote repository
+```
+git fetch --all
+```
+- To restore the state of remote master branch
+```
+git reset --hard origin/master
+```
 
 
 
@@ -747,65 +771,81 @@ Now latest commit is : p1,p2 { Same As Commit #5 }
     - Apply the same changes on multiple branches
     - Create new Branch based on the current changes later
 
-- Now if you have modified some files and used $ git status, those files will be presented in section of waiting to be Staged
+- Now if you have modified some files and used ```git status```, those files will be presented in section of waiting to be Staged
 - Add modified OR new files to stash {Not presented yet in staging area}
-$ git stash
+```
+git stash
+```
 > Now changes are in stash
 
 
-- Now if you used $ git status, working tree will be clean {Nothing to commit}
+- Now if you used ```git status```, working tree will be clean {Nothing to commit}
 
 - If you need changes that are saved in TOP of stash {Import them}
-$ git stash apply
-
+```
+git stash apply
+```
 
 
 - Stash works like a stack and applies LIFO
 
 - list all changes in stash stack
-$ git stash list
+```
+git stash list
+```
 > Last stash has index {0} its on top of stack
 
 - Import {Apply} changes from a stack with index N
-$ git stash apply stash@{N}
-
+```
+git stash apply stash@{n}
+```
 
 - Add modified OR new files to stash {Not present in staging area} with a MESSAGE {Best Practice}
-$ git stash save "Message"
-
+```
+git stash save "Message"
+```
 
 - If you need changes that are saved in TOP of stash {Import them} and then REMOVE IT
-$ git stash pop
+```
+git stash pop
+```
 
-
-- VIP Note : - You can only stash files that are in staging area OR files that are tracked by git
+- VIP Note : - You can only stash files that are in staging area OR files that are tracked by Git
              - Stash only save file that is modified {Not all other files in working directory}
              - A conflict may arise will using stash so fix it manually
 
 
 - Stash can save untracked files {files that are created but not in staging area}
 - To add them in stash
-$ git stash -u
+```
+git stash -u
+```
 > -u : stands for untracked files
 
 
-- Add file that are untracked  + ignored by .gitignore {Rare To Use}
-$ git stash -a
+- Add file that are untracked + ignored by ```.gitignore``` {Rare To Use}
+```
+git stash -a
+```
 > -a : stands for ALL
 
 
 - Create a branch from stash
-$ git stash branch <BranchNameYouWantToCreate> <StashID>
+```
+git stash branch <BranchNameYouWantToCreate> <StashID>
+```
 > Without specifying stash ID first stash from stack will be used
 
 
 - Remove a stash form stack {without applying it}
-$ git stash drop stash@{N}
-
+```
+git stash drop stash@{N}
+```
 
 - Clear ALL stash form stack {without applying it}
-$ git stash clear
-
+```
+git stash clear
+```
 
 
 
@@ -816,35 +856,42 @@ $ git stash clear
 commits
 - In git anything that is commited can be restored, git wont never restore files that were never in staging are or not committed before
 
-- While we are working , git silently records what our head pointer and how does it look like
+- While we are working, Git silently records what our head pointer and how does it look like
 - Each time we create a snapshot or switch branches the reflog is updated
 
 - Navigate history of all changes in repo using :
-$ git reflog
-
-- Each commit , reset on origin/master branch, different branches
+```
+git reflog
+```
+    
+- Each commit, reset on origin/master branch, different branches
 
 
 - Show all commits with reflog reference and copy Checksum of deleted commit
-$ git log -g
-
+```
+git log -g
+```
 
 - Create a new branch with Checksum of deleted commit
-$ git branch lost_changes <CommitCheckSum>
-> Now lost_changes branch will contains same files as deleted commit
+```
+git branch lost_changes <CommitCheckSum>
+```   
+> Now ```lost_changes``` branch will contains same files as deleted commit
 
 
-- Note: information in reflog is stored for 90 days
+- Note : information in reflog is stored for 90 days
 
-- Simulate a situation -> if you have used --hard rest command to go back to previous commit {from commit (REMOVINGGG) to commit (REMOVINGGG)},
-then you want to restore deleted Commit (REMOVINGGG)
+- Simulate a situation -> if you have used ```git reset --hard``` command to go back to previous commit {from commit ```REMOVINGGG``` to commit ```SQUASHINGGG```},
+then you want to restore deleted Commit ```REMOVINGGG```
 
 - Show reflog for past 1 hour
-$ git reflog --since="1.hour"
-> day is used also instead of hour
+```
+git reflog --since="1.hour"
+```
+> ```day``` is used also instead of ```hour```
 
 
----------------------------------------
+```
 a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{0}: reset: moving to HEAD@{1}
 981ecb1 (lost_changes) HEAD@{1}: reset: moving to HEAD@{3}
 a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{2}: reset: moving to HEAD@{1}
@@ -860,13 +907,17 @@ a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{11}: reset: moving to HEAD
 a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{12}: checkout: moving from test to master
 a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{13}: checkout: moving from master to test
 a2ef2d5 (HEAD -> master, origin/master, test1) HEAD@{14}: checkout: moving from test to master
---------------------------------------
+```
 
 
 - Now restore commit history to that commit
-$ git reset --hard HEAD@{n}
-
-Above Example : $ git reset --hard HEAD@{5}
+```
+git reset --hard HEAD@{n}
+```
+- Above Example : 
+```
+git reset --hard HEAD@{5}
+```
 
 - Now deleted commit will be restored
 
@@ -883,39 +934,43 @@ Above Example : $ git reset --hard HEAD@{5}
                             - Regular team collaboration
 
 
--------------------------------------------------------
+```
 
     G--H                  Feature
    /
 A--B--C--D--E--F--H*      Production
        \
         I
--------------------------------------------------------
+```
 
 - cherry-pick is used to just take one commit from a feature branch and put it on top of another branch
 - Not The Best Practice
 
 - Go to branch you want to copy commit in and type :
-$ git cherry-pick <CommitCheckSum>
-
+```
+git cherry-pick <CommitCheckSum>
+```
 
 - To continue cherry-picking process after resolving a conflict
-$ git cherry-pick --continue
-
+```
+git cherry-pick --continue
+```
 
 - If something went wrong during resolving a conflict and want to stop cherry-picking process
-$ git cherry-pick --abort
-
+```
+git cherry-pick --abort
+```
 
 - Cherry-pick multiple commits at once
-$ git cherry-pick <CommitCheckSum1> <CommitCheckSum2> <CommitCheckSum3>
-
+```
+git cherry-pick <CommitCheckSum1> <CommitCheckSum2> <CommitCheckSum3>
+```
 
 - Best practices of using cherry pick:
     - Prefer merge or rebase when possible
     - Avoid creating any duplication
     - Use 'x' option during cherry-pick command, this will specify hash code of original commit
-      $ git cherry-pick -x
+      ```git cherry-pick -x```
     - This will automatically add hash code of original commit in comment message of new one
 
 
@@ -924,8 +979,9 @@ $ git cherry-pick <CommitCheckSum1> <CommitCheckSum2> <CommitCheckSum3>
 21. Cloning remote repository: git clone :
 ------------------------------------------
 
-$ git clone <GitHubURL>
-
+```
+git clone <GitHubURL>
+```
 
 
 
@@ -935,9 +991,14 @@ $ git clone <GitHubURL>
 ----------------------------------------------------------------------
 - If you want to remove a file from last commit
 - first copy commit to staged area and then remove commit
-$ git reset --soft HEAD~1
+```
+git reset --soft HEAD~1
+```
+
 - Then remove file you don't want
-$ git reset HEAD <file>
+```
+git reset HEAD <file>
+```
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -947,8 +1008,8 @@ $ git reset HEAD <file>
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
-Combining Git commits with squash :
-----------------------------------
+## Combining Git commits with squash :
+--------------------------------------
 
 - We’ll say my starting point is my bug fix branch with 3 commits.
 
@@ -957,11 +1018,12 @@ It would be nice if I didn’t have to preserve these extraneous commits as sepa
 
 - With my bug fix branch checked out, I’ll start by running the interactive rebase command with HEAD~3. This lets
 Git know I want to operate on the last three commits back from HEAD.
-$ git rebase -i HEAD~3
-
+```
+git rebase -i HEAD~3
+```
 - Git will open up your default terminal text editor (most likely vim) and present you with a list of commits:
 
------------------------
+```
 pick 7f9d4bf Accessibility fix for frontpage bug
 pick 3f8e810 Updated screenreader attributes
 pick ec48d74 Added comments & updated README
@@ -973,20 +1035,20 @@ pick ec48d74 Added comments & updated README
 # r, reword <commit> = use commit, but edit the commit message
 # e, edit <commit> = use commit, but stop for amending
 # s, squash <commit> = use commit, but meld into previous commit
---------------------------
+```
 
 - There are a couple options here, but we’ll go ahead and mark commits we’d like to meld with it’s successor by
 changing pick to squash. (If you’re using VIM, type i to enter insert mode)
---------------------------
+```
 pick 7f9d4bf Accessibility fix for frontpage bug
 squash 3f8e810 Updated screenreader attributes
 squash ec48d74 Added comments & updated README
 Press ESC then type :wq to save and exit the file (if you are using VIM)
---------------------------
+```
 
 - At this point Git will pop up another dialog where you can rename the commit message of the new, larger squashed commit:
 
---------------------------
+```
 # This is a combination of 3 commits
 # This is the 1st commit message:
 
@@ -1002,13 +1064,13 @@ Added comments & updated README
 
 # Please enter the commit message for your changes. Lines starting
 # with '#' will be ignored, and an empty message aborts the commit
---------------------------
+```
 
 - Simply saving this file without making changes will result in a single commit with a commit message that is a
 concatenation of all 3 messages. If you’d rather rename your new commit entirely, comment out each commit’s message,
 and write you’re own. Once you’ve done, save and exit:
 
-- That’s it. You can either merge or rebase your branch back to mainline.
+- That’s it. You can either ```merge``` or ```rebase``` your branch back to mainline.
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -1017,36 +1079,42 @@ and write you’re own. Once you’ve done, save and exit:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
-Rebase:
--------
+## Rebase:
+----------
 
 
 - When I start development I always make sure the code on my local machine is synced to the latest commit from remote master
 # With my local master branch checked out
-$ git pull
-
+```
+git pull
+```
 
 - Next, I’ll check out {Create} a new branch so I can write and commit code to this branch – keeping my work separated from the
 master branch
-$ git checkout -b my_cool_feature
-
-----------------------------------------
+```
+git checkout -b my_cool_feature
+```
+    
+```
          /      Feature_Branch
 A---B---C       Master
-----------------------------------------
+```
 
 - As I’m developing my feature, I’ll make a few commits…
-$ git add .
-$ git commit -m 'This is a new commit, yay!'
-
+```
+git add .
+```
+```
+git commit -m 'This is a new commit, yay!'
+```
 
 - Do this step three time {For Example} to have three commits in that branch
 
-----------------------------------------
+```
               X --- Y --- Z Feature_Branch
              /
 A --- B --- C               Master
-----------------------------------------
+```
 
 - Note: while I’m developing it’s likely that my fellow developers will have shipped some of their own changes to
 remote master. That’s ok, we can deal with that later.
@@ -1054,50 +1122,63 @@ remote master. That’s ok, we can deal with that later.
 - Now that I’m done developing my feature, I want to merge my changes back into remote master. To begin this process
 I’ll switch back to local master branch and pull the latest changes. This ensures my local machine has any new
 commits submitted by my teammates.
-$ git checkout master
-$ git pull
-
-------------------------------------------------------------
+```
+git checkout master
+```
+    
+```
+git pull
+```
+    
+```
               X --- Y --- Z     Feature_Branch
              /
 A --- B --- C --- D -- E        Master
-------------------------------------------------------------
+```
 
 - What I want to do now is make sure my feature will jive with any new changes from remote master OR i just want the
 changes from master as I will continue working based on them so I want to have them in my feature branch. To do this,
 I’ll checkout {Switch To} my feature branch and rebase against my local master. This will re-anchor my branch against the latest
 changes I just pulled from remote master. Additionally at this point, Git will let me know if I have any conflicts
 and I can take care of them on my branch
-$ git checkout my_cool_feature
-$ git rebase master
-> Note : when you use $ git rebase you are rebasing from LOCAL master repo, so make sure first that in local  master Branch
-you have pulled new changes from remote master branch
+```
+git checkout my_cool_feature
+```
+    
+```
+git rebase master
+```
+> Note : when you use ```git rebase``` you are rebasing from LOCAL master repo, so make sure first that in local master Branch you have pulled new changes from remote master branch
 
-------------------------------------------------------------
+```
                          X^--- Y^ --- Z^    Feature_Branch
                         /
 A --- B --- C --- D -- E                    Master
-------------------------------------------------------------
+```
 
 - Now that my feature branch doesn’t have any conflicts, I can switch back to my master branch and place my changes onto master,
 this will put all of Feature_Branch commits on top of master branch {It now will includes all of changes in Feature_Branch}
-$ git checkout master
-$ git rebase my_cool_feature
+```
+git checkout master
+```
+    
+```
+git rebase my_cool_feature
+```
+- Since I synced with remote master before doing the rebase, I should be able to push my changes up to remote master without issues.
 
-- Since I synced with remote master before doing the rebase, I should be able to push my changes up to remote master
-without issues.
+```
+git push origin -u master
+```
 
-$ git push origin -u master
-
-
-- VIP Note: Don't use $ git rebase command in a shared Feature Branch {Just in a branch you are the only one working on}
+- VIP Note: Don't use ```git rebase``` command in a shared Feature Branch {Just in a branch you are the only one working on}
 - Because time arrangement of commits will not be accurate For Example :
 
-------------------------------------------------------------------------------------------------------------------------
+```
   3                       3               3--4                                   3--4
  /                       /               /                                      /
 1--2   Rebase-->     1--2            1--2--5       Rebase-->             1--2--5
-------------------------------------------------------------------------------------------------------------------------
+```
 
 - In that case its not timely accurate
 
