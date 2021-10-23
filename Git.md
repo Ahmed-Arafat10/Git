@@ -4,8 +4,8 @@
 Option in Your GitHub Account, then go to your repo then just copy SSH link {Not HTTPS}
 
 
-2. Version Control Systems & Git - Overview :
----------------------------------------------
+## 2. Version Control Systems & Git - Overview :
+------------------------------------------------
 
 - Git Workflow:
 ```
@@ -25,9 +25,9 @@ Directory            Area             {Local Repo}
 to easily identify who broke system or created defect file
 
 - Configuration levels:
-    - ```System``` : All local users in PC + All their repositories
-    - ```Global``` : All repositories on the computer for current user
-    - ```Local``` : Only current repository {After running $ git init to create .git folder}
+    - ```System```: All local users in PC + All their repositories
+    - ```Global```: All repositories on the computer for current user
+    - ```Local```: Only current repository {After running $ git init to create .git folder}
 
 - Note : Values on the lower level overrides valued of the upper level
 
@@ -45,7 +45,7 @@ git config --global user.name "AA"
 git config --global user.email "AA@gmail.com"
 ```
 
-- Note: Any commit will be save your email and your name to know who did what
+- Note: Any commit will save your email and your name to know who did what
 
 
 - To check value of user.name
@@ -77,13 +77,13 @@ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
 ```
 
 
-6. Git repo init, First commit and main branch  :
-------------------------------------------------
+## 6. Git repo init, First commit and main branch  :
+----------------------------------------------------
 
 
 - Two ways to create a repository:
-        - Create repo locally
-        - Clone existing remote repo
+    - Create repo locally
+    - Clone existing remote repo
 
 
 - Create a local repo {Creating a .git directory}
@@ -154,8 +154,8 @@ you have not told Git about are not affected.
 
 
 
-7. Git ignoring & Git log :
---------------------------
+## 7. Git ignoring & Git log :
+------------------------------
 
 - It does not make any sense to track all files in project as some of them are just
 logs files or binaries files that are generated during program compilation, so track only source code
@@ -209,8 +209,8 @@ git log --pretty=oneline
 ```
 
 
-8. Git undoing things & Vi text editor :
-----------------------------------------
+## 8. Git undoing things & Vi text editor :
+-------------------------------------------
 
 - Change comment of last commit {You are NOT creating a new commit}
 ```
@@ -260,8 +260,8 @@ git ls-files
 
 
 
-9. Git remote repositories :
-----------------------------
+## 9. Git remote repositories :
+-------------------------------
 
     
 - Check if your local repo is connected to remote repo
@@ -292,8 +292,8 @@ git clone <GitHubLink>
 
 
 
-10. SSH Connection :
---------------------
+## 10. SSH Connection :
+-----------------------
 
 
 - SSH {Secure Socket Shell} : its a secured protocol that allows you to connect to remote computer using terminal
@@ -316,8 +316,8 @@ git remote rm <RemoteRepoName>
 ```
 
 
-11. Git Branching :
--------------------
+## 11. Git Branching :
+----------------------
 
 
 - Create a new LOCAL branch
@@ -432,8 +432,8 @@ its commit checksum, For Example : ```$ git checkout 739d1d3a21b379147efe5e3622d
 
 
 
-12. Pull Requests & Merge Requests :
-------------------------------------
+## 12. Pull Requests & Merge Requests :
+---------------------------------------
 
 
 - Three types of merging Requests:
@@ -445,8 +445,8 @@ its commit checksum, For Example : ```$ git checkout 739d1d3a21b379147efe5e3622d
     
     
     
-13. Updating local repository (fetch, merge, pull) & Team development demo :
-----------------------------------------------------------------------------
+## 13. Updating local repository (fetch, merge, pull) & Team development demo :
+-------------------------------------------------------------------------------
 
 
 - Master branch -> branch on your PC {local}
@@ -483,8 +483,8 @@ git pull origin master
 
 
     
-14. Merge Conflicts :
----------------------
+## 14. Merge Conflicts :
+------------------------
 
 -> Image if you in remote master branch have a [Web/index.html] that contains
 ```
@@ -546,8 +546,8 @@ nano Web/index.html
 
 
 
-15. Git Rebasing & Force Update of remote repository :
-------------------------------------------------------
+## 15. Git Rebasing & Force Update of remote repository :
+---------------------------------------------------------
 
 
 ```
@@ -586,13 +586,13 @@ git rebase --skip
     
 - Now after resloving the conflict add modified files in staging area ``` git add .``` then continue rebase process ```$ git rebase --continue```
 
------------------------------
+```
   0--               Feature#1
  /   \
 0-----0
         \
          0---0      Feature#2
------------------------------
+```
 
 - Now if you ```git push``` into Feature#2 it will gives you an error, thats because remote Feature#2 branch has a different commit history compared to local one, because ```git rebase``` command changes git history. Now both local and remote Feature#2 branch
 commit history is not same as each other
@@ -628,8 +628,8 @@ git push --force-with-lease
 
 
 
-16. Git Interactive Rebase :
-----------------------------
+## 16. Git Interactive Rebase :
+-------------------------------
 
 
 - If you want to change message of last Commit
@@ -666,8 +666,8 @@ git push --force-with-lease origin <BranchName>
 
 
 
-17. Git reset :
---------------
+## 17. Git reset :
+------------------
 
 
 - When to use ```git reset```:
@@ -762,8 +762,8 @@ git reset --hard origin/master
 
 
 
-18. Git stash :
----------------
+## 18. Git stash :
+------------------
 
 
 - When to use stash:
@@ -849,8 +849,8 @@ git stash clear
 
 
 
-19. Git reflog :
-----------------
+## 19. Git reflog :
+-------------------
 
 - While using git you may lose a commit foe example you used force delete or hard reset or interactive rebase to squash
 commits
@@ -924,8 +924,8 @@ git reset --hard HEAD@{5}
 
 
 
-20. Git cherry-pick :
----------------------
+## 20. Git cherry-pick :
+------------------------
 
 - Used to modify commit history {Not The Best Practice}, regular merge is preferred when it is possible
 
@@ -976,8 +976,8 @@ git cherry-pick <CommitCheckSum1> <CommitCheckSum2> <CommitCheckSum3>
 
 
 
-21. Cloning remote repository: git clone :
-------------------------------------------
+## 21. Cloning remote repository: git clone :
+---------------------------------------------
 
 ```
 git clone <GitHubURL>
