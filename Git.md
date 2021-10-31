@@ -147,7 +147,14 @@ git commit -m "Message"
 ```
 git commit -a -m "Message"
 ```
-> -a : Tell the command to automatically stage files that have been modified and deleted, but new files
+OR
+
+```
+git commit -am "Message"
+
+```
+> ```-am``` : Concate ```-m``` with ```-a``` {Linux} <br />
+> ```-a``` : Tell the command to automatically stage files that have been modified and deleted, but new files
 you have not told Git about are not affected.
 - VIP Note : This works only if you have modified an existing file NOT creating a new one
 
