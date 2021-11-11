@@ -91,7 +91,7 @@ git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
 git init
 ```
 
-- Add file.txt to stage area
+- Add file.txt to staging area
 ```
 git add file.txt
 ```
@@ -101,12 +101,12 @@ git add file.txt
 git add file1.txt file2.txt file3.txt
 ```
 
-- Add all files that end with .cpp extension to stage area {Mask Method}
+- Add all files that end with .cpp extension to staging area {Mask Method}
 ```
 git add *.cpp
 ```
 
-- Add all files/folders to stage area
+- Add all files/folders to staging area
 ```
 git add .
 ```
