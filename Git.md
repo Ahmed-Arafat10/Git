@@ -444,9 +444,9 @@ its commit checksum, For Example : ```$ git checkout 739d1d3a21b379147efe5e3622d
 
 
 - Three types of merging Requests:
-        1) Merge commit
-        2) Squash and Merge
-        3) rebase and Merge
+    - Merge commit
+    - Squash and Merge
+    - rebase and Merge
 
 - Rest is in GitHub Pull Request Menu
     
