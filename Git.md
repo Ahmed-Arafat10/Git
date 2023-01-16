@@ -4,7 +4,15 @@
 
 ## Topics To Be Discussed
 #### 1. What Is Git Version Control ?
-#### 2. Version Control Systems & Git - Overview :
+#### 2. Version Control Systems & `Git` - Overview
+#### 6. `Git` repo init, First commit and `main` branch
+#### 7. Git ignoring & Git log
+#### 8. Git undoing things & Vi text editor
+#### 9. `Git` remote repositories
+#### 10. `SSH` Connection
+#### 11. `Git` Branching
+#### 12. Pull Requests & Merge Requests
+#### 13. Updating local repository (fetch, merge, pull) & Team development demo
 
 <hr>
 
@@ -14,7 +22,7 @@ To Configure `git` on `Ubuntu` install `SSH` and generate a `key_pair`,
 ````shell
 ssh-keygen
 ````
-Then copy `public key` that exists in `/home/ username/.ssh` and 
+Then copy `public key` that exists in `/home/arafat/.ssh` and 
 put it in `SSH` Option in Your `GitHub` Account,
 then go to your repo then just copy `SSH` link (Not `HTTPS`)
 
@@ -43,140 +51,128 @@ to easily identify who broke system or created defect file
   - ```Global```: All repositories on the computer for current user
   - ```Local```: Only current repository `git init` to create `.git` folder
 
-> Note : Values on the lower level overrides valued of the upper level
+> Note : Values in the upper level overrides Values in the lower level
 
 - Example:
 ````
 git config --global user.name
 ````
 
-- All of git command are written in git bash {Windows} OR in terminal {Linux}
+- All `git` command are written in `git bash` (`Windows`) or in `terminal` (`Linux`)
 
 
-- To Tell git who you are
+- To Tell `git` who you are
 ```
-git config --global user.name "AA"
-git config --global user.email "AA@gmail.com"
+git config --global user.name "Ahmed_Arafat10"
+git config --global user.email "ahmedxarafat0101@gmail.com"
 ```
+> Note: Any `commit` will save your email and your name to know who did that `commit`
 
-- Note: Any commit will save your email and your name to know who did what
 
-
-- To check value of user.name
+- To check value stored in `user.name`
 ```
 git config user.name
 ```
+> `O/P`: `Ahmed_Arafat10` or empty if you didn't store tha `name` yet 
 
-- To check value of user.nemail
+- To check value stored `user.email`
 ```
 git config user.email
 ```
+> `O/P`: `ahmedxarafat0101@gmail.com` or empty if you didn't store tha `email` yet
 
 - List all properties with values
 ```
 git config -l
 ```
-OR
-```
-git config --list
-```
+> or `git config --list`
 
-- To change default text editor, make vi editor your default editor
+- To change default text editor to `vi editor`
 ```
 git config --global core.editor "vi"
 ```
-OR Use Notepad++ in windows
+
+- To change default text editor to `Notepad++`
 ```
 git config --global core.editor "C:/Prgram Files/Notepad++/Notepad++.exe"
 ```
 
 
-## 6. Git repo init, First commit and main branch  :
-----------------------------------------------------
-
+### 6. `Git` repo init, First commit and `main` branch
 
 - Two ways to create a repository:
-    - Create repo locally
-    - Clone existing remote repo
+    - Create a `repo` locally
+    - Clone existing remote `repo`
 
-
-- Create a local repo {Creating a .git directory}
+- Create a local `repo` (Creating a `.git` directory) in your current directory
 ```
 git init
 ```
 
-- Add file.txt to staging area
+- Add `file.txt` to `staging area`
 ```
 git add file.txt
 ```
 
-- Add some specific files to staging area
+- Add some specific files to `staging area`
 ```
 git add file1.txt file2.txt file3.txt
 ```
 
-- Add all files that end with .cpp extension to staging area {Mask Method}
+- Add all files that end with `.cpp` extension to `staging area` (Mask Method)
 ```
 git add *.cpp
 ```
 
-- Add all files/folders to staging area
+- Add all `files`/`directories` to `staging area`
 ```
 git add .
 ```
 
-- Check status of repo in your current branch
+- Check status of your `repo` in current branch
 ```
 git status
 ```
 
-- Check status of repo in your current branch with short version flag ```-s```
+- Check status of repo in your current branch with short version
 ```
 git status -s
 ```
-> A : stands for files are ADDED to staging area and need to be committed <br>
-> ?? : untracked file {file that is created in working directory while its not in staging area}
+> `A` : stands for files are Added to `staging area` and need to be committed <br>
+> `??` : untracked file (file that is created in `working directory` while it is not in `staging area` yet)
 
 
-- If you forgot any command use --help flag
+- If you forgot any command, just use `--help` flag
 ```
 git status --help
 ```
-OR
-```
-git status -h
-```
+> or `git status -h`
 
-- Commit new changes {Create a snapshot (version)}
+
+- Make a new Commit (Create a snapshot `version`)
 ```
 git commit -m "Message"
 ```
-> -m : message that describes changes that happened in that snapshot (version)
+> `-m` : message that describes changes that happened in that snapshot (`version`)
+
+- Note : Usually commit message of first commit is `"init commit"`
 
 
-- Note : Usually commit message of first commit is "init commit"
-
-
-- Add to stage area & Commit in one line
+- Add to `staging area` & make a Commit in one line
 ```
 git commit -a -m "Message"
 ```
-OR
+> Or concat both flags like this `git commit -am "Message"`
 
-```
-git commit -am "Message"
-
-```
-> ```-am``` : Concate ```-m``` with ```-a``` {Linux} <br />
-> ```-a``` : Tell the command to automatically stage files that have been modified and deleted, but new files
-you have not told Git about are not affected.
-- VIP Note : This works only if you have modified an existing file NOT creating a new one
+> `-am` : Concatenating `-m` with `-a` (`Linux`) <br />
+> `-a` : Tell the command to automatically stage files that have been modified and deleted, but newly added files
+you have not told `Git` about are not affected.
+- `VIP Note` : This works only if you have `modified` an existing file NOT creating a new one
 
 
 
 
-## 7. Git ignoring & Git log :
-------------------------------
+### 7. Git ignoring & Git log
 
 - It does not make any sense to track all files in project as some of them are just
 logs files or binaries files that are generated during program compilation, so track only source code
@@ -187,186 +183,192 @@ and configuration files
 ```
 git rm --cached file.txt
 ```
-> If you didn't use flag ```--cached``` it is going to remove file from file system too, Be Curefull
+> If you didn't use flag ```--cached``` it is going to remove file from file system too, **_Be Careful_**
 
 
-- Remove a folder from staging area
+- Remove a folder from `staging area`
 ```
 git rm -r --cached <DirName>
 ```
-> If you didn't use flag ```--cached``` it is going to remove folder from file system too, Be Curefull
+> Again, If you didn't use flag ```--cached``` it is going to remove folder from file system too, **_Be Careful_**
 
 
-- Ignore Files Or Directories
+- Ignore some `Files` Or `Directories`
 ```
 touch .gitignore
 nano .gitignore
 ```
+
 Inside it :
 ```
     *.class     # All files that ends with extension .class
     bin/        # Any file in bin folder
     file1.txt   # Ignore Specific file
 ```
-- Then you can use ```git add .``` and those files are not going to be added to staging area
+- Then you can use `git add .` and those files are not going to be added to `staging area`
 
-- After adding ```.gitignore``` file it will be shown as an untracked file {that is needed to be added to staging area}
-you also can ignore it by typing it in ```.gitignore``` file HAHAHAHA
+- After adding ```.gitignore``` file it will be shown as an `untracked file` (that is needed to be added to `staging area`)
+you also can ignore it by typing it in `.gitignore` file (ignoring itself)
 
 
-- View previous log of created commits in your current local branch
+- View the previous log of `commits` in your current `local branch`
 ```
 git log
 ```
 
-- View last 2 log of created commits in your current local branch
+- View last `2` logs of `commits` in your current `local branch`
 ```
 git log -2
 ```
 
-- Change formatting to show only Checksum (Hash ID) and Commit message {Not used widely}
+- Change formatting to show only `Checksum` (Hash Value) and Commit message (Not used widely)
 ```
 git log --pretty=oneline
 ```
 
 
-## 8. Git undoing things & Vi text editor :
--------------------------------------------
+### 8. `Git` undoing things & `Vi` text editor :
 
-- Change comment of last commit {You are NOT creating a new commit}
+- Change the comment of the last `commit` (You are `NOT` creating a new commit)
 ```
 git commit --amend
 ```
-> And then terminal will open VI to edit message of last commit
-- VIP Note: if your staging area is same as your last local commit then you used ```--amend``` option, this will just
-change message of last commit, but if your staging area is different from last commit {you have added a new file for example}, then after using ```--amend``` option last commit will contains your new staging area {Will be overridden}
-{```--amend``` takes your current staging area and override last commit content (if both are same nothing will be changed) + being able to change its message} <br>
-> Checksum {Hash Code} of commit will change
+> Then the terminal will open `VI` to edit message of the last `commit`
+- `VIP Note`: if your `staging area` is same as your last `local commit` then you used `--amend` option, this will just
+change message of last `commit`, but if your `staging area` is different from last commit (you have added a new file for example), then after using `--amend` option last `commit` will contain
+your new `staging area` (`Will be overridden`) <br>
+`--amend` takes your current `staging area` and override last `commit` content (if both are same nothing will be changed) + being able to change its message <br>
+> VIP Note: `Checksum` (Hash Code) of that commit will change
 
 
-- Add latest staging area in previous commit {You are NOT creating a new commit}
+- Add the latest `staging area` in previous commit (You are NOT creating a new `commit`)
 ```
 git commit --amend --no-edit
 ```
-> ```--amend --no-edit``` option is same as ```--amend``` but without allowing you to change the last commit message <br>
-> Checksum {Hash Code} of commit will change
+> `--amend --no-edit` option is same as `--amend` but without allowing you to change the last commit message <br>
+> Again `Checksum` (Hash Code) of that commit will change
 
 
-- Unstage a file from staging area
+- Unstage a file from `staging area`
 ```
 git restore --staged <FileName>
 ```
-OR
+Or
 ```
 git restore --staged *
 ```
-> VIP Note : ```git rm --cached <FileName>``` command will remove file from staging area whether this file is modified or just added, while ```git restore --staged <FileName>``` command For modified file its not going to remove it from staging area, its going to neglect changes of it {this is done if you added new modified file to staging area accidentally but you don't want to commit that change so you undo it from staging area} OR it removes new ADDED file from staging area
+> VIP Note : ```git rm --cached <FileName>``` command will remove file from 
+`staging area` whether this file is modified or just added, while 
+`git restore --staged <FileName>` command For modified file it is not going
+to remove it from staging area, it is going to neglect changes of it (this is 
+done if you added new modified file to `staging area` accidentally, but you don't
+want to `commit` that change, so you undo adding newly modified content to the `staging area`) 
+`Or` it removes new Added file from `staging area`
 
 
-- Restore a file from last commit {Will remove any changes in that file}
+- Restore a file from last `commit` (Will remove any changes in that file)
 ```
 git restore <FileName>
 ```
-> Note : this can take place when changed file is not in staging area {you didn't yet use ```git add .```},
-if file is changed (from last commit) but in staging area you cannot restore it,
-you only can restore it when changed file is in modified area
+> Note : this can take place when changed file is not in `staging area` 
+(you didn't yet use `git add .`),
+if the file is changed (from last `commit`) but in `staging area` you cannot restore it,
+you only can restore it when the changed file is in `modified area`
 
-- Note: we can restore anything that is committed, while changes that aren't saved in commits can not be restored
-{```git reflog```}
+- VIP Note: we can restore anything that is committed, while changes that aren't saved in commits can not be restored
+(using `git reflog`)
     
-- Show files in staging area
+- Show files in `staging area`
 ```
 git ls-files
 ```
 
 
-
-## 9. Git remote repositories :
--------------------------------
+### 9. `Git` remote repositories
 
     
-- Check if your local repo is connected to remote repo
+- Check if your `local repo` is connected to `remote repo`
 ```
 git remote -v
 ```
-> Will list all created remote repos
+> Will list all created `remote repos` in your current directory
 
 
-- Add a new remote repo with shorthand name "origin"
+- Add a new `remote repo` with shorthand name `origin`
 ```
 git remote add origin <GitHubLink>
 ```
-> ```origin``` will now be used instead of GitHub URL to make referencing much more easier
+> `origin` will now be used instead of `GitHub URL` to make referencing more easy
 
 
-- Push your commits & Connect local master branch with remote master branch
+- Push your `commits` & Connect your local branch with remote branch
 ```
-git push origin -u <master>
+git push origin -u <BranchName>
 ```
-> -u : stands for upstream {This will link local repo to remote one, then when you enter ```git pull``` it will understand that you want to pull changed from exactly that remote branch}
+> `-u` : stands for upstream (This will link local repo to remote one, then 
+when you enter `git pull` it will understand that you want to pull changed from exactly that remote branch)
 
 
-- Clone remote repo to your machine
+- Clone `remote repo` to your machine
 ```
 git clone <GitHubLink>
 ```
 
 
 
-## 10. SSH Connection :
------------------------
+### 10. `SSH` Connection
 
 
-- SSH {Secure Socket Shell} : its a secured protocol that allows you to connect to remote computer using terminal
-using SSH you can log in to another computer from anywhere and perform any command on it
-- The goal of SSH is to make remote connections to computers much more secure
-- Establish a SSH connection to identify yourself without using username/password everytime
-- SSH keys comes in pairs : public and private
-- Public key can be stored in any remote server as GitHub
-- Private key is stored in your machine
+- `SSH` (Secure Socket Shell) : it is a secured protocol that allows you to connect to remote computer using terminal
+, using `SSH` you can log in to another computer from anywhere and perform any command on it.
+- The goal of `SSH` is to make remote connections to computers much more secure.
+- Establishing `SSH` connection between `Git VC` & `GitHub` to identify yourself without using `username`/`password` everytime.
+- `SSH` keys comes in pairs > `public` and `private`.
+- `Public key` can be stored in any remote server as `GitHub`.
+- `Private key` is stored in your machine.
 
 
-- Change remote URL of already created remote repo {EX: origin}
+- Change remote `URL` of already created remote `repo` (Example: `origin`)
 ```
 git remote set-url origin <NewGitHubLink>
 ```
 
-- Remove a remote repo from your machine
+- Remove a remote `repo` from your machine
 ```
 git remote rm <RemoteRepoName>
 ```
 
 
-## 11. Git Branching :
-----------------------
+### 11. `Git` Branching
 
 
-- Create a new LOCAL branch
+- Create a new `local branch`
 ```
 git branch <BranchName>
 ```
 
-- List all LOCAL Branches
+- List all `local branches`
 ```
 git branch
 ```
 
-- List all REMOTE Branches
+- List all `remote branches`
 ```
 git branch -r
 ```
-> -r: stands for remote
+> `-r`: stands for `remote`
 
 
-- List ALL Branches {LOCAL + REMOTE}
+- List All Branches (`Local` & `Remote`)
 ```
 git branch -a
 ```
-> -a: stands for all {Linux}
+> `-a`: stands for all (like `ls a` command in `Linux`)
 
 
-- Note : ```git branch``` command is not used among developers as this only create the
-branch but not switch to it, they prefer to use ```git checkout``` command that creates the branch then switch to the created branch
+- Note : `git branch` command is not used among developers as this only create the
+branch but not switch to it, they prefer to use ```git checkout``` command
+that creates the `branch` then switch to the created `branch`
 
 
 - Switch to a branch
@@ -374,24 +376,24 @@ branch but not switch to it, they prefer to use ```git checkout``` command that 
 git checkout <BranchName>
 ```
 
-- Create a new Local branch then switch to it
+- Create a new `Local branch `then switch to it
 ```
 git checkout -b <BranchName>
 ```
-> -b: stands for branch
+> `-b`: stands for `branch`
 
-
-- New command in latest git version: {Not common as it is new}
-- Switch to a branch
+- New command in the latest `git` version (Not common as it is new)
+- 
+- Switch to a `branch`
 ```
 git switch <BranchName>
 ```
 
-- Create a new branch then switch to it
+- Create a new `branch` then switch to it
 ```
 git switch -c <BranchName>
 ```
-> -c: stands for create
+> `-c`: stands for create
 
 
 - Navigate back to previous branch
@@ -399,39 +401,40 @@ git switch -c <BranchName>
 git switch -
 ```
 
-- Note: Branch name should be descriptive {what changes or features will be in this branch}
+- `Tip` : `Branch` name should be descriptive (what changes or features will be in this branch)
 
 
-- Show commits of current branch
+- Show commits of current `branch`
 ```
 git log
 ```
-> Note : your branch will have same commits history of master + commits of it {In future}, as Git creates a pointer to last commit of master so it have the commits history of master branch
+> Note : your branch will have same commits history of master + commits of it
+(In The Future), as `Git` creates a pointer to last `commit` of master, so it has the `commits` history of master branch, something likse this :
 ```
 A--B--C <-- Master/Branch
-       \    Branch {No commits yet}
+       \    Branch #1 (No commits yet)
 ```
             
-- Show commits of ALL branch
+- Show `commits` of All `branches`
 ```
 git log -all
 ```
 
-- Show commits of a specific branch
+- Show commits of a specific `branch`
 ```
 git log <BranchName>
 ```
-> Can also work with remote repo example : ```git log origin/master```
+> Can also work with remote repo example : `git log origin/master`
 
 
-- Remove a LOCAL branch
+- Remove a `Local Branch`
 ```
-git branch -d|D <BranchName>
+git branch -d/D <BranchName>
 ```
-> -d: stands for delete
+> `-d`: stands for delete
 
 
-- Remove a REMOTE branch {In GitHub}
+- Remove a `Remote Branch` (In `GitHub`)
 ```
 git push <RemoteName> --delete <BranchName>
 ```
@@ -439,35 +442,34 @@ git push <RemoteName> --delete <BranchName>
 ```
 git push origin --delete Branch#2
 ```
-- If you forget that command {or any other one} use Linux grep : ```git push origin --help | grep delete```
+- If you forget that command (or any other one) use `Linux grep` command, like this
+`git push origin --help | grep delete`
     
-- VIP Note :
-- You can navigate to different commits using commit checksum {Hash ID}
+- `VIP Note` : You can navigate to different `commits` using commit checksum (Hash Value)
 ```
 git checkout <checksum>
 ```
-- Now you are in ```detached HEAD``` state, you are not in a specific branch
-- You can use this feature to navigate to different versions of your codes and observe changes in working directory files
-- you can also create a commit in this state {Not Recommended} but once you have switched ```git switch -```  from this state, you wont be able to see this commit in commit tree history {Not saved in it}, but you can navigate to it again if you have saved
-its commit checksum, For Example : ```$ git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a```
+> Now you are in `detached HEAD` state, you are not in a specific branch <br>
+> You can use this feature to navigate to different versions of your codes and observe changes in working directory files <br>
+> You can also create a commit in this state (Not Recommended) but once you have switched ```git switch -```  from this state,
+> you won't be able to see this commit in `commit tree history` (Not saved in it), but you can navigate to it again if you have saved
+its commit checksum, For Example : `git checkout 739d1d3a21b379147efe5e3622d4cd674871eb1a`
 
 
 
-## 12. Pull Requests & Merge Requests :
----------------------------------------
+### 12. Pull Requests & Merge Requests 
 
 
 - Three types of merging Requests:
-    - Merge commit
-    - Squash and Merge
-    - rebase and Merge
+    - `Merge` commit
+    - `Squash and Merge` commit
+    - `rebase and Merge` commit
 
-- Rest is in GitHub Pull Request Menu
+- Rest is in `GitHub` `Pull Request` Menu
     
     
     
-## 13. Updating local repository (fetch, merge, pull) & Team development demo :
--------------------------------------------------------------------------------
+### 13. Updating local repository (fetch, merge, pull) & Team development demo
 
 
 - Master branch -> branch on your PC {local}
