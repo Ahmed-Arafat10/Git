@@ -1,40 +1,54 @@
-# Git Version Control
+## `Git` Version Control Documentation
+#### By Ahmed Arafat 
+#### Oct 14, 2021
 
-- To Configure git on Ubuntu install SSH and generate a key_pair, then copy public key and put it in SSH
-Option in Your GitHub Account, then go to your repo then just copy SSH link {Not HTTPS}
+## Topics To Be Discussed
+#### 1. What Is Git Version Control ?
+#### 2. Version Control Systems & Git - Overview :
+
+<hr>
+
+#### 1. What Is Git Version Control ?
+
+To Configure `git` on `Ubuntu` install `SSH` and generate a `key_pair`,
+````shell
+ssh-keygen
+````
+Then copy `public key` that exists in `/home/ username/.ssh` and 
+put it in `SSH` Option in Your `GitHub` Account,
+then go to your repo then just copy `SSH` link (Not `HTTPS`)
 
 
-## 2. Version Control Systems & Git - Overview :
-------------------------------------------------
+### 2. Version Control Systems & Git - Overview :
 
-- Git Workflow:
-```
+`Git` Workflow:
+````
 Working             Staging         .git directory
 Directory            Area             {Local Repo}
-```
+````
 
-- Three different states:
-    1) ```Modified``` : You modified the file but you have not committed your changes yet
-    2) ```Staged``` : You have marked a modified file to be present in the next snapshot of your file system,
-    information about such changes are present in file with name index thats why we can say files are staged
-    or file at index {Both are correct}
-    3) ```Committed``` : Data is safely stored in your local database {Snapshot}
+Three different states:
+   1) ```Modified``` : You modified the file, but you have not committed your changes yet
+   2) ```Staged``` : You have marked a modified file to be present in the next snapshot of your file system,
+   information about such changes are present in file with name index that is why we can say files are `staged`
+   or file at `index` (Both are correct)
+   3) ```Committed``` : Data is safely stored in your local `database` (`Snapshot`)
 
 
-- Every snapshot of the files contains information about the author of the snapshot, this is done
+Every snapshot of the files contains information about the author of the snapshot, this is done
 to easily identify who broke system or created defect file
 
 - Configuration levels:
-    - ```System```: All local users in PC + All their repositories
-    - ```Global```: All repositories on the computer for current user
-    - ```Local```: Only current repository {After running $ git init to create .git folder}
+  - ```System```: All local users in PC + All their repositories
+  - ```Global```: All repositories on the computer for current user
+  - ```Local```: Only current repository `git init` to create `.git` folder
 
-- Note : Values on the lower level overrides valued of the upper level
+> Note : Values on the lower level overrides valued of the upper level
 
 - Example:
-```
+````
 git config --global user.name
-```
+````
 
 - All of git command are written in git bash {Windows} OR in terminal {Linux}
 
