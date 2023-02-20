@@ -694,32 +694,66 @@ git commit --amend
 ```
 - But what if you want to change second last one
 
-- ```Interactive Rebase``` : It makes it easy to clean up your commits before they get rebased or moved into another branch
+- `Interactive Rebase` : It makes it easy to clean up your commits before they get rebased or moved into another branch
 
 ```
 git rebase -i HEAD~3
 ```
 > i: stands for interactive rebase
 
-- Then substitute for ```r``` -> ```reward``` instead of ```pick``` in commit you want to change its message
+- Output:
+````
+pick 709eaaf 3:22 pm 1/16/23
+pick 26ad9f6 3:47 am 2/20/23
+
+# Rebase 78195b7..26ad9f6 onto 78195b7 (2 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
+#                    commit's log message, unless -C is used, in which case
+#                    keep only this commit's message; -c is same as -C but
+#                    opens the editor
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+#         create a merge commit using the original merge commit's
+#         message (or the oneline, if no original merge commit was
+````
+
+- Then substitute for `r` > `reward` instead of `pick` in commit you want to change its message
 then save and close editor
+> a new window will be opened to edit the message of the selected commit
 
 
-
-- You can combine {squash} many commits into just one commit to ensure git clean history {If they are all related to same feature}
-```
+- You can combine (`squash`) many commits into just one commit to ensure git clean history (If they are all related to same feature)
+````
 git rebase -i HEAD~3
-```
-- Then substitute for ```s``` -> ```squash``` instead of ```pick``` for all commits except first one then save and close editor
+````
+- Then substitute for `s` > `squash` instead of `pick` for all commits 
+except first one then save and close editor, something like this
+````
+pick 709eaaf 3:22 pm 1/16/23
+s 26ad9f6 3:47 am 2/20/23
+s 26adfsd6 12:5 am 2/15/23
+````
+> A new window will be opened to add the message of the squashed commits 
 
-- Note : merge conflict may happens during squashing so you will fix it manually
-- It then will merge those commits in just one new commit that will have a different checksum {Hash ID}
-- As we are changing Git commit history of local repo, so to pull these changes into your remote feature branch you have to force pull as tree history of local becomes different from remote one, then use:
+- Note : merge conflict may happen during squashing, so you will fix it manually
+- It then will merge those commits in just one new commit that will have a different `checksum`
+- As we are changing Git commit history of local repo, so to push these changes 
+into your remote feature branch you have to force push as tree history of local becomes 
+different from remote one, then use:
 ```
 git push --force-with-lease origin <BranchName>
 ```
-> Remember : ```--force-with-lease``` It is a safer option that will not override any work on the remote branch if more commits were added to the remote branch by another team member.
-
+> Remember : `--force-with-lease` It is a safer option that will not override any work on the remote branch if more commits were added to the remote branch by another team member.
 
 
 ## 15. Git reset :
