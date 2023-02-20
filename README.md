@@ -759,23 +759,23 @@ git push --force-with-lease origin <BranchName>
 ## 15. Git reset :
 
 
-- When to use ```git reset```:
+- When to use `git reset`:
     - Undo last changes
     - Change commit history
     - Restore state of the remote branch
     - Restore state of the branch after unsuccessful rebase
 
-- Go back to a commit, in which all files in latest commit will present in working directory but changes between old
+- Go back to a commit, in which all files in the latest commit will present in working directory but changes between old
 and latest commit will be in staging area waiting to be committed ```git commit -m```
-```
+````
 git reset --soft <CommitID>
-```
+````
 OR
-```
+````
 git reset --soft HEAD~n
-```
+````
     
-```
+````
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -784,24 +784,24 @@ use : $ git reset --soft HEAD~5
 Now working directory is : p1,p2,p3,p4,p5 {Not changed from latest Commit}
 Now Staging Area is : p3,p4,p5 are waiting to be committed { Staging Area of Commit #10 }
 Now latest commit is : p1,p2 { Commit #5 }
-```
+````
 
-- Go back to a commit, in which all files in latest commit will present in working directory but changes between old
-and latest commit are in untracked mode waiting to be in staging area ```git add .```, then to be committed ```$ git commit -m```
-```
+- Go back to a commit, in which all files in the latest commit will present in working directory but changes between old
+and latest commit are in untracked mode waiting to be in staging area (`git add .`), then to be committed (`git commit -m`)
+````
 git reset --mixed <CommitID>
-```
+````
 OR
-```
+````
 git reset --mixed HEAD~n
-```
+````
 OR
-```
+````
 git reset <CommitID>
-```
-> Default option without any flags is ```--mixed```
+````
+> Note: Default option without any flags is `--mixed`
 
-```
+````
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -810,25 +810,25 @@ use : $ git reset --mixed HEAD~5
 Now working directory is : p1,p2,p3,p4,p5 {Not changed from latest Commit}
 Now Staging Area is : p3,p4,p5 are untracked files { Staging Area of Commit #5 so, needed to use $ git add .}
 Now latest commit is : p1,p2 { Commit #5 }
-```
+````
 
 
 
-- Go back to a commit in which files in working directory will be same as commit you have chosen {Replace them}
-```
+- Go back to a commit in which files in working directory will be same as commit you have chosen (Replace them)
+````
 git reset --hard <CommitID>
-```
+````
 
 - Go back 3 previous commit
-```
+````
 git reset --hard HEAD~3
-```
+````
 OR
-```
+````
 git reset --hard <CheckSumID>
-```
+````
     
-```
+````
 Commit #10 : p1,p2,p3,p4,p5
 ..
 ..
@@ -837,17 +837,19 @@ use : $ git reset --hard HEAD~5
 Now working directory is : p1,p2 { Same As Commit #5 }
 Now Staging Area is : p1,p2 { Same As Commit #5 }
 Now latest commit is : p1,p2 { Same As Commit #5 }
-```
+````
 
 - If you want to rest working tree as it is in a remote repo :
-- To fetch latest state of remote repository
-```
+- To fetch the latest state of remote repository
+````
 git fetch --all
-```
+````
+> `--all` : fetch from all remotes
+
 - To restore the state of remote master branch
-```
+````
 git reset --hard origin/master
-```
+````
 
 
 
@@ -859,109 +861,109 @@ git reset --hard origin/master
     - Apply the same changes on multiple branches
     - Create new Branch based on the current changes later
 
-- Now if you have modified some files and used ```git status```, those files will be presented in section of waiting to be Staged
-- Add modified OR new files to stash {Not presented yet in staging area}
-```
+- Now if you have modified some files and used `git status`, those files will be presented in section of waiting to be Staged
+- Add modified OR new files to stash (Not presented yet in staging area)
+````
 git stash
-```
+````
 > Now changes are in stash
 
 
-- Now if you used ```git status```, working tree will be clean {Nothing to commit}
+- Now if you used `git status`, working tree will be clean (Nothing to commit)
 
-- If you need changes that are saved in TOP of stash {Import them}
-```
+- If you need changes that are saved in the TOP of stash (Import them)
+````
 git stash apply
-```
+````
 
 
-- Stash works like a stack and applies LIFO
+- Stash works like a stack and applies `LIFO`
 
 - list all changes in stash stack
-```
+````
 git stash list
-```
-> Last stash has index {0} its on top of stack
+````
+> Last stash has index `0` it's on top of stack
 
-- Import {Apply} changes from a stack with index N
-```
+- Import (Apply) changes from a stack with index `N`
+````
 git stash apply stash@{n}
-```
+````
 
-- Add modified OR new files to stash {Not present in staging area} with a MESSAGE {Best Practice}
-```
+- Add modified OR new files to stash (Not present in staging area) with a MESSAGE (Best Practice)
+````
 git stash save "Message"
-```
+````
 
-- If you need changes that are saved in TOP of stash {Import them} and then REMOVE IT
-```
+- If you need changes that are saved in the TOP of stash (Import them) and then REMOVE IT
+````
 git stash pop
-```
+````
 
 - VIP Note : - You can only stash files that are in staging area OR files that are tracked by Git
-             - Stash only save file that is modified {Not all other files in working directory}
-             - A conflict may arise will using stash so fix it manually
+             - Stash only save file that is modified (Not all other files in working directory)
+             - A conflict may arise while using stash so fix it manually
 
 
-- Stash can save untracked files {files that are created but not in staging area}
+- Stash can save untracked files (files that are created but not in staging area)
 - To add them in stash
-```
+````
 git stash -u
-```
-> -u : stands for untracked files
+````
+> `-u` : stands for untracked files
 
 
-- Add file that are untracked + ignored by ```.gitignore``` {Rare To Use}
-```
+- Add file that are untracked + ignored by `.gitignore` (Rare To Use)
+````
 git stash -a
-```
-> -a : stands for ALL
+````
+> `-a` : stands for ALL
 
 
 - Create a branch from stash
-```
+````
 git stash branch <BranchNameYouWantToCreate> <StashID>
-```
+````
 > Without specifying stash ID first stash from stack will be used
 
 
-- Remove a stash form stack {without applying it}
-```
+- Remove a stash form stack (without applying it)
+````
 git stash drop stash@{N}
-```
+````
 
-- Clear ALL stash form stack {without applying it}
-```
+- Clear ALL stash form stack (without applying it)
+````
 git stash clear
-```
+````
 
 
 ## 17. Git reflog :
 
 - While using git you may lose a commit foe example you used force delete or hard reset or interactive rebase to squash
 commits
-- In git anything that is commited can be restored, git wont never restore files that were never in staging are or not committed before
+- In git anything that is committed can be restored, git wont never restore files that were never in staging are or not committed before
 
 - While we are working, Git silently records what our head pointer and how does it look like
 - Each time we create a snapshot or switch branches the reflog is updated
 
 - Navigate history of all changes in repo using :
-```
+````
 git reflog
-```
+````
     
 - Each commit, reset on origin/master branch, different branches
 
 
 - Show all commits with reflog reference and copy Checksum of deleted commit
-```
+````
 git log -g
-```
+````
 
 - Create a new branch with Checksum of deleted commit
-```
+````
 git branch lost_changes <CommitCheckSum>
-```   
+````
 > Now ```lost_changes``` branch will contains same files as deleted commit
 
 
